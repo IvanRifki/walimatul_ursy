@@ -5,7 +5,7 @@ Text TeksBiasa(String text, BuildContext context) {
   return Text(
     text,
     style: GoogleFonts.poppins(
-      fontSize: MediaQuery.of(context).size.width * 0.025,
+      fontSize: MediaQuery.of(context).size.width * 0.03,
       color: Colors.brown[900],
     ),
   );
@@ -15,7 +15,7 @@ Text TeksBiasaBold(String text, BuildContext context) {
   return Text(
     text,
     style: GoogleFonts.poppins(
-      fontSize: MediaQuery.of(context).size.width * 0.025,
+      fontSize: MediaQuery.of(context).size.width * 0.03,
       fontWeight: FontWeight.bold,
       color: Colors.brown[900],
     ),

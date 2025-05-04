@@ -200,6 +200,10 @@ class _InvitationPageState extends State<InvitationPage> {
                           padding: const EdgeInsets.all(20.0),
                           child: //Teks ulang start
                               Tilt(
+                            disable: true,
+                            lightConfig: const LightConfig(
+                              disable: true,
+                            ),
                             shadowConfig: const ShadowConfig(disable: true),
                             childLayout: ChildLayout(behind: [
                               Column(
@@ -244,7 +248,7 @@ class _InvitationPageState extends State<InvitationPage> {
                                     child: TiltParallax(
                                         size: const Offset(15, 20),
                                         child: TeksBiasa(
-                                            'kami mengundang Bapak/Ibu/Saudara/i sekalian',
+                                            'kami mengundang Bapak/Ibu/Saudara/i',
                                             context)),
                                   ),
                                   FadeInDown(
