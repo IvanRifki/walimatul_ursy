@@ -239,7 +239,6 @@ class _InvitationPageState extends State<InvitationPage> {
 
                                   SizedBox(height: tinggiLayar * 0.01),
 
-                                  //Kami mengundang
                                   FadeInDown(
                                     child: TiltParallax(
                                         size: const Offset(15, 20),
@@ -254,7 +253,6 @@ class _InvitationPageState extends State<InvitationPage> {
                                             'untuk menghadiri acara walimatul urs:',
                                             context)),
                                   ),
-
                                   SizedBox(height: tinggiLayar * 0.01),
 
                                   //Pengantin Wanita
@@ -280,10 +278,7 @@ class _InvitationPageState extends State<InvitationPage> {
                                           context),
                                     ),
                                   ),
-
                                   SizedBox(height: tinggiLayar * 0.02),
-
-                                  //&
                                   FadeIn(
                                     child: TiltParallax(
                                       size: const Offset(20, 20),
@@ -315,10 +310,8 @@ class _InvitationPageState extends State<InvitationPage> {
                                           context),
                                     ),
                                   ),
-
                                   SizedBox(height: tinggiLayar * 0.02),
 
-                                  //yg insyallah
                                   FadeInUp(
                                     child: TiltParallax(
                                       size: const Offset(15, 20),
@@ -334,14 +327,11 @@ class _InvitationPageState extends State<InvitationPage> {
                                           'Sabtu, 27 Desember 2025', context),
                                     ),
                                   ),
-
                                   SizedBox(height: tinggiLayar * 0.02),
-
                                   Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        //akad pukul
                                         Column(
                                           children: [
                                             //akad
@@ -362,8 +352,6 @@ class _InvitationPageState extends State<InvitationPage> {
                                             ),
                                           ],
                                         ),
-
-                                        //walimatul urs
                                         Column(
                                           children: [
                                             //walimatul ursy
@@ -385,10 +373,7 @@ class _InvitationPageState extends State<InvitationPage> {
                                           ],
                                         )
                                       ]),
-
                                   SizedBox(height: tinggiLayar * 0.02),
-
-                                  //bertempat di
                                   FadeInUp(
                                     child: TiltParallax(
                                       size: const Offset(15, 20),
@@ -422,7 +407,7 @@ class _InvitationPageState extends State<InvitationPage> {
                                 ],
                               ),
                             ]),
-                            child: SizedBox(
+                            child: Container(
                               width: lebarLayar.toDouble(),
                               height: tinggiLayar.toDouble(),
                             ),
