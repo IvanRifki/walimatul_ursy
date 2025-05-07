@@ -133,7 +133,10 @@ class _InvitationPageState extends State<InvitationPage> {
                 padding: const EdgeInsets.all(20.0),
                 child: //Teks ulang start
                     Tilt(
-                  disable: isScroll,
+                  // disable: isScroll,
+                  onGestureMove: (tiltDataModel, gesturesType) => setState(() {
+                    isScroll;
+                  }),
                   lightConfig: const LightConfig(
                     disable: true,
                   ),
@@ -346,7 +349,7 @@ class _InvitationPageState extends State<InvitationPage> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.brown[900],
+                            color: Colors.red[900],
                             borderRadius: BorderRadius.circular(10),
                           ),
                           height: tinggiLayar * 0.2,
@@ -355,7 +358,7 @@ class _InvitationPageState extends State<InvitationPage> {
                         ),
                         Container(
                           decoration: BoxDecoration(
-                            color: Colors.yellow[900],
+                            color: Colors.blue[900],
                             borderRadius: BorderRadius.circular(10),
                           ),
                           height: tinggiLayar * 0.2,
