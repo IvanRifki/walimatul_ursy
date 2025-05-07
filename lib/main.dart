@@ -55,6 +55,12 @@ class _IvanMiniAppState extends State<IvanMiniApp> {
             guestName: state.pathParameters['guestName']!,
           ),
         ),
+        // GoRoute(
+        //   path: '/:guestName',
+        //   builder: (context, state) => InvitationPage(
+        //     guestName: state.pathParameters['guestName']!,
+        //   ),
+        // ),
       ],
     );
 
