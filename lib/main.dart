@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+import 'package:walimatul_ursy/pages/coba.dart';
 import 'package:walimatul_ursy/pages/ourwedding.dart';
 
 void main() {
@@ -38,10 +39,10 @@ class _IvanMiniAppState extends State<IvanMiniApp> {
   Widget build(BuildContext context) {
     final _router = GoRouter(
       routes: [
-        // GoRoute(
-        //   path: '/',
-        //   builder: (context, state) => MiniAppScreen(),
-        // ),
+        GoRoute(
+          path: '/',
+          builder: (context, state) => Coba(),
+        ),
         //langsung diarahin ke halaman wedding
         // GoRoute(
         //   path: '/',

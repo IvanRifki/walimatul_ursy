@@ -141,272 +141,279 @@ class _InvitationPageState extends State<InvitationPage> {
                   child:
 
                       // Teks ulang start
-                      GestureDetector(
-                    behavior: HitTestBehavior.translucent,
-                    child: Tilt(
-                        // disable: isScroll,
-                        // onGestureMove: (tiltDataModel, gesturesType) => setState(() {
-                        //   isScroll;
-                        // }),
-                        // disable: true,
-                        lightConfig: const LightConfig(
-                          disable: true,
-                        ),
-                        shadowConfig: const ShadowConfig(disable: true),
-                        childLayout: ChildLayout(behind: [
-                          Column(
-                            children: [
-                              //Bismillah
-                              FadeInDown(
-                                child: TiltParallax(
-                                  size: const Offset(15, 15),
-                                  child: Image.asset(
-                                    scale: MediaQuery.of(context).size.width *
-                                        0.016,
-                                    'assets/weddingassets/bismillah.png',
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-
-                              SizedBox(height: tinggiLayar * 0.01),
-
-                              //Dengan memohon
-                              FadeInDown(
-                                child: TiltParallax(
-                                    size: const Offset(15, 20),
-                                    child: TeksBiasa(
-                                        'Dengan memohon rahmat dan ridho',
-                                        context)),
-                              ),
-
-                              //Allah Azza Wa Jalla
-                              FadeInDown(
-                                child: TiltParallax(
-                                    size: const Offset(15, 20),
-                                    child: TeksBiasa(
-                                        'Allah Azza Wa Jalla', context)),
-                              ),
-
-                              SizedBox(height: tinggiLayar * 0.01),
-
-                              //Kami mengundang
-                              FadeInDown(
-                                child: TiltParallax(
-                                    size: const Offset(15, 20),
-                                    child: TeksBiasa(
-                                        'kami mengundang Bapak/Ibu/Saudara/i',
-                                        context)),
-                              ),
-                              FadeInDown(
-                                child: TiltParallax(
-                                    size: const Offset(15, 20),
-                                    child: TeksBiasa(
-                                        'untuk menghadiri acara walimatul urs:',
-                                        context)),
-                              ),
-
-                              SizedBox(height: tinggiLayar * 0.01),
-
-                              //Pengantin Wanita
-                              FadeInLeft(
-                                child: TiltParallax(
-                                  size: const Offset(20, 30),
-                                  child: TeksNamaPengantin(
-                                      'Novia Andhara', context),
-                                ),
-                              ),
-                              FadeInLeft(
-                                child: TiltParallax(
-                                  size: const Offset(15, 20),
-                                  child:
-                                      TeksBiasa('Putri pertama dari', context),
-                                ),
-                              ),
-                              FadeInLeft(
-                                child: TiltParallax(
-                                  size: const Offset(15, 20),
-                                  child: TeksBiasaBold(
-                                      'Bpk. Agus Suwarno & Ibu Sarmanah',
-                                      context),
-                                ),
-                              ),
-
-                              SizedBox(height: tinggiLayar * 0.02),
-
-                              //&
-                              FadeIn(
-                                child: TiltParallax(
-                                  size: const Offset(20, 20),
-                                  child: TeksNamaPengantin('&', context),
-                                ),
-                              ),
-                              // SizedBox(height: tinggiLayar * 0.01),
-
-                              //Pengantin Pria
-                              FadeInRight(
-                                child: TiltParallax(
-                                  size: const Offset(20, 30),
-                                  child: TeksNamaPengantin(
-                                      'Ivan Rifki Nur Alif', context),
-                                ),
-                              ),
-                              FadeInRight(
-                                child: TiltParallax(
-                                  size: const Offset(15, 20),
-                                  child:
-                                      TeksBiasa('Putra pertama dari', context),
-                                ),
-                              ),
-                              FadeInRight(
-                                child: TiltParallax(
-                                  size: const Offset(15, 20),
-                                  child: TeksBiasaBold(
-                                      'Bpk. Nurdin Maryanto (Rahimahullah) & Ibu Suwarti',
-                                      context),
-                                ),
-                              ),
-
-                              SizedBox(height: tinggiLayar * 0.02),
-
-                              //yg insyallah
-                              FadeInUp(
-                                child: TiltParallax(
-                                  size: const Offset(15, 20),
-                                  child: TeksBiasa(
-                                      'Yang Insyaallah akan diselenggarakan pada:',
-                                      context),
-                                ),
-                              ),
-                              FadeInUp(
-                                child: TiltParallax(
-                                  size: const Offset(15, 20),
-                                  child: TeksWaktuBold(
-                                      'Sabtu, 27 Desember 2025', context),
-                                ),
-                              ),
-
-                              SizedBox(height: tinggiLayar * 0.02),
-
-                              Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    //akad pukul
-                                    Column(
-                                      children: [
-                                        //akad
-                                        FadeInLeft(
-                                          child: TiltParallax(
-                                            size: const Offset(15, 20),
-                                            child: TeksBiasa('Akad', context),
-                                          ),
-                                        ),
-                                        //pukul
-                                        FadeInLeft(
-                                          child: TiltParallax(
-                                            size: const Offset(15, 20),
-                                            child: TeksWaktuBold(
-                                                '09.00 WIB', context),
-                                          ),
-                                        ),
-                                      ],
+                      Column(
+                          // behavior: HitTestBehavior.translucent,
+                          children: [
+                        Tilt(
+                            // disable: isScroll,
+                            // onGestureMove: (tiltDataModel, gesturesType) => setState(() {
+                            //   isScroll;
+                            // }),
+                            // disable: true,
+                            lightConfig: const LightConfig(
+                              disable: true,
+                            ),
+                            shadowConfig: const ShadowConfig(disable: true),
+                            childLayout: ChildLayout(behind: [
+                              Column(
+                                children: [
+                                  //Bismillah
+                                  FadeInDown(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 15),
+                                      child: Image.asset(
+                                        scale:
+                                            MediaQuery.of(context).size.width *
+                                                0.016,
+                                        'assets/weddingassets/bismillah.png',
+                                        fit: BoxFit.cover,
+                                      ),
                                     ),
+                                  ),
 
-                                    //walimatul urs
-                                    Column(
+                                  SizedBox(height: tinggiLayar * 0.01),
+
+                                  //Dengan memohon
+                                  FadeInDown(
+                                    child: TiltParallax(
+                                        size: const Offset(15, 20),
+                                        child: TeksBiasa(
+                                            'Dengan memohon rahmat dan ridho',
+                                            context)),
+                                  ),
+
+                                  //Allah Azza Wa Jalla
+                                  FadeInDown(
+                                    child: TiltParallax(
+                                        size: const Offset(15, 20),
+                                        child: TeksBiasa(
+                                            'Allah Azza Wa Jalla', context)),
+                                  ),
+
+                                  SizedBox(height: tinggiLayar * 0.01),
+
+                                  //Kami mengundang
+                                  FadeInDown(
+                                    child: TiltParallax(
+                                        size: const Offset(15, 20),
+                                        child: TeksBiasa(
+                                            'kami mengundang Bapak/Ibu/Saudara/i',
+                                            context)),
+                                  ),
+                                  FadeInDown(
+                                    child: TiltParallax(
+                                        size: const Offset(15, 20),
+                                        child: TeksBiasa(
+                                            'untuk menghadiri acara walimatul urs:',
+                                            context)),
+                                  ),
+
+                                  SizedBox(height: tinggiLayar * 0.01),
+
+                                  //Pengantin Wanita
+                                  FadeInLeft(
+                                    child: TiltParallax(
+                                      size: const Offset(20, 30),
+                                      child: TeksNamaPengantin(
+                                          'Novia Andhara', context),
+                                    ),
+                                  ),
+                                  FadeInLeft(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 20),
+                                      child: TeksBiasa(
+                                          'Putri pertama dari', context),
+                                    ),
+                                  ),
+                                  FadeInLeft(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 20),
+                                      child: TeksBiasaBold(
+                                          'Bpk. Agus Suwarno & Ibu Sarmanah',
+                                          context),
+                                    ),
+                                  ),
+
+                                  SizedBox(height: tinggiLayar * 0.02),
+
+                                  //&
+                                  FadeIn(
+                                    child: TiltParallax(
+                                      size: const Offset(20, 20),
+                                      child: TeksNamaPengantin('&', context),
+                                    ),
+                                  ),
+                                  // SizedBox(height: tinggiLayar * 0.01),
+
+                                  //Pengantin Pria
+                                  FadeInRight(
+                                    child: TiltParallax(
+                                      size: const Offset(20, 30),
+                                      child: TeksNamaPengantin(
+                                          'Ivan Rifki Nur Alif', context),
+                                    ),
+                                  ),
+                                  FadeInRight(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 20),
+                                      child: TeksBiasa(
+                                          'Putra pertama dari', context),
+                                    ),
+                                  ),
+                                  FadeInRight(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 20),
+                                      child: TeksBiasaBold(
+                                          'Bpk. Nurdin Maryanto (Rahimahullah) & Ibu Suwarti',
+                                          context),
+                                    ),
+                                  ),
+
+                                  SizedBox(height: tinggiLayar * 0.02),
+
+                                  //yg insyallah
+                                  FadeInUp(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 20),
+                                      child: TeksBiasa(
+                                          'Yang Insyaallah akan diselenggarakan pada:',
+                                          context),
+                                    ),
+                                  ),
+                                  FadeInUp(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 20),
+                                      child: TeksWaktuBold(
+                                          'Sabtu, 27 Desember 2025', context),
+                                    ),
+                                  ),
+
+                                  SizedBox(height: tinggiLayar * 0.02),
+
+                                  Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
                                       children: [
-                                        //walimatul ursy
-                                        FadeInRight(
-                                          child: TiltParallax(
-                                            size: const Offset(15, 20),
-                                            child: TeksBiasa(
-                                                'Walimatul Ursy', context),
-                                          ),
+                                        //akad pukul
+                                        Column(
+                                          children: [
+                                            //akad
+                                            FadeInLeft(
+                                              child: TiltParallax(
+                                                size: const Offset(15, 20),
+                                                child:
+                                                    TeksBiasa('Akad', context),
+                                              ),
+                                            ),
+                                            //pukul
+                                            FadeInLeft(
+                                              child: TiltParallax(
+                                                size: const Offset(15, 20),
+                                                child: TeksWaktuBold(
+                                                    '09.00 WIB', context),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                        //pukul
-                                        FadeInRight(
-                                          child: TiltParallax(
-                                            size: const Offset(15, 20),
-                                            child: TeksWaktuBold(
-                                                '10.00 WIB', context),
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ]),
 
-                              SizedBox(height: tinggiLayar * 0.02),
+                                        //walimatul urs
+                                        Column(
+                                          children: [
+                                            //walimatul ursy
+                                            FadeInRight(
+                                              child: TiltParallax(
+                                                size: const Offset(15, 20),
+                                                child: TeksBiasa(
+                                                    'Walimatul Ursy', context),
+                                              ),
+                                            ),
+                                            //pukul
+                                            FadeInRight(
+                                              child: TiltParallax(
+                                                size: const Offset(15, 20),
+                                                child: TeksWaktuBold(
+                                                    '10.00 WIB', context),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ]),
 
-                              //bertempat di
-                              FadeInUp(
-                                child: TiltParallax(
-                                  size: const Offset(15, 20),
-                                  child: TeksBiasa('Bertempat di', context),
-                                ),
+                                  SizedBox(height: tinggiLayar * 0.02),
+
+                                  //bertempat di
+                                  FadeInUp(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 20),
+                                      child: TeksBiasa('Bertempat di', context),
+                                    ),
+                                  ),
+                                  FadeInUp(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 20),
+                                      child: TeksBiasaBold(
+                                          'Perum. BTN Cicadas Mas Permai',
+                                          context),
+                                    ),
+                                  ),
+                                  FadeInUp(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 20),
+                                      child: TeksBiasaBold(
+                                          'Blok D3 No.13, Rt/Rw. 004/014',
+                                          context),
+                                    ),
+                                  ),
+                                  FadeInUp(
+                                    child: TiltParallax(
+                                      size: const Offset(15, 20),
+                                      child: TeksBiasaBold(
+                                          'Ds. Cicadas, Kec. Gunung Putri - Kab.Bogor',
+                                          context),
+                                    ),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.teal[900],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    height: tinggiLayar * 0.2,
+                                    width: lebarLayar * 0.2,
+                                    child: Text('awkawkakw'),
+                                  ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.pink[900],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    height: tinggiLayar * 0.2,
+                                    width: lebarLayar * 0.2,
+                                    child: Text('awkawkakw2'),
+                                  )
+                                ],
                               ),
-                              FadeInUp(
-                                child: TiltParallax(
-                                  size: const Offset(15, 20),
-                                  child: TeksBiasaBold(
-                                      'Perum. BTN Cicadas Mas Permai', context),
-                                ),
+                            ]),
+                            child: IgnorePointer(
+                              child: SizedBox(
+                                width: lebarLayar.toDouble(),
+                                height: tinggiLayar.toDouble(),
                               ),
-                              FadeInUp(
-                                child: TiltParallax(
-                                  size: const Offset(15, 20),
-                                  child: TeksBiasaBold(
-                                      'Blok D3 No.13, Rt/Rw. 004/014', context),
-                                ),
-                              ),
-                              FadeInUp(
-                                child: TiltParallax(
-                                  size: const Offset(15, 20),
-                                  child: TeksBiasaBold(
-                                      'Ds. Cicadas, Kec. Gunung Putri - Kab.Bogor',
-                                      context),
-                                ),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.yellow[900],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                height: tinggiLayar * 0.2,
-                                width: lebarLayar * 0.2,
-                                child: Text('awkawkakw'),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.purple[900],
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                height: tinggiLayar * 0.2,
-                                width: lebarLayar * 0.2,
-                                child: Text('awkawkakw2'),
-                              )
-                            ],
-                          ),
-                        ]),
-                        child: IgnorePointer(
-                          child: SizedBox(
-                            width: lebarLayar.toDouble(),
-                            height: tinggiLayar.toDouble(),
-                          ),
-                        )),
-                  ),
+                            )),
+                      ]),
 
                   //Teks ulang end
                 ),
               ),
             )
           : Center(
+              child: IgnorePointer(
               child: Text('Masih kosong ya bang 👍',
                   style: GoogleFonts.msMadi(
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
                     color: Colors.brown[700],
-                  ))),
+                  )),
+            )),
 
       // Stack(children: [
       //   // Background color
