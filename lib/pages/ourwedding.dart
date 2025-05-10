@@ -147,28 +147,106 @@ class _InvitationPageState extends State<InvitationPage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               FloatingActionButton(
-                  backgroundColor: Colors.white70,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100.0),
-                  ),
-                  child: const Icon(
-                    Icons.favorite,
-                    color: Colors.pink,
-                  ),
-                  onPressed: () {
-                    showAboutDialog(context: context, children: [
-                      Column(
-                        children: [
-                          Text('ini perangkat ${deviceType}'),
-                          Text('OS yang digunakan ${mobileOS}'),
-                          Text(ukuranLayar),
-                          Text(
-                              'ukurannya read: ${lebarLayar} x ${tinggiLayar}'),
-                        ],
-                      )
-                    ]);
-                  }),
+                backgroundColor: Colors.white70,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100.0),
+                ),
+                child: const Icon(
+                  Icons.favorite,
+                  color: Colors.pink,
+                ),
+                onPressed: () {
+                  showTabModal(context);
+                  // showModalBottomSheet(
+                  //     context: context,
+                  //     builder: (context) {
+                  //       return Column(
+                  //         children: [
+                  //           // showTabModal(context),
+                  //           showTabModal(context),
+                  //           Row(
+                  //               mainAxisAlignment:
+                  //                   MainAxisAlignment.spaceEvenly,
+                  //               children: [
+                  //                 Column(
+                  //                   children: [
+                  //                     IconButton(
+                  //                         icon: Icon(
+                  //                           Icons.location_on,
+                  //                           color: Colors.red,
+                  //                         ),
+                  //                         onPressed: () {}),
+                  //                     TeksBiasa('Lokasi Acara', context)
+                  //                   ],
+                  //                 ),
+                  //                 Column(
+                  //                   children: [
+                  //                     IconButton(
+                  //                         icon: Icon(
+                  //                           Icons.chat_rounded,
+                  //                           color: Colors.black,
+                  //                         ),
+                  //                         onPressed: () {}),
+                  //                     TeksBiasa('Kirim Ucapan', context)
+                  //                   ],
+                  //                 ),
+                  //               ]),
+                  //           Column(
+                  //             children: [
+                  //               Text('ini perangkat ${deviceType}'),
+                  //               Text('OS yang digunakan ${mobileOS}'),
+                  //               Text(ukuranLayar),
+                  //               Text(
+                  //                   'ukurannya read: ${lebarLayar} x ${tinggiLayar}'),
+                  //             ],
+                  //           ),
+                  //         ],
+                  //       );
+                  //     });
+
+                  // showAboutDialog(
+                  //   context: context,
+                  //   children: [
+                  //     Row(
+                  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //         children: [
+                  //           Column(
+                  //             children: [
+                  //               IconButton(
+                  //                   icon: Icon(
+                  //                     Icons.location_on,
+                  //                     color: Colors.red,
+                  //                   ),
+                  //                   onPressed: () {}),
+                  //               TeksBiasa('Lokasi Acara', context)
+                  //             ],
+                  //           ),
+                  //           Column(
+                  //             children: [
+                  //               IconButton(
+                  //                   icon: Icon(
+                  //                     Icons.chat_rounded,
+                  //                     color: Colors.black,
+                  //                   ),
+                  //                   onPressed: () {}),
+                  //               TeksBiasa('Kirim Ucapan', context)
+                  //             ],
+                  //           ),
+                  //         ]),
+                  //     Column(
+                  //       children: [
+                  //         Text('ini perangkat ${deviceType}'),
+                  //         Text('OS yang digunakan ${mobileOS}'),
+                  //         Text(ukuranLayar),
+                  //         Text(
+                  //             'ukurannya read: ${lebarLayar} x ${tinggiLayar}'),
+                  //       ],
+                  //     ),
+                  //   ],
+                  // );
+                },
+              ),
             ],
           ),
           floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
@@ -183,7 +261,7 @@ class _InvitationPageState extends State<InvitationPage> {
                   // child: deviceType == "HP"
                   child: deviceType != ""
                       ? Padding(
-                          padding: const EdgeInsets.all(20.0),
+                          padding: const EdgeInsets.all(0.0),
                           child: //Teks ulang start
                               Tilt(
                             shadowConfig: const ShadowConfig(disable: true),
@@ -271,7 +349,6 @@ class _InvitationPageState extends State<InvitationPage> {
                                       child: TeksNamaPengantin('&', context),
                                     ),
                                   ),
-                                  // SizedBox(height: tinggiLayar * 0.01),
 
                                   //Pengantin Pria
                                   FadeInRight(
@@ -296,99 +373,21 @@ class _InvitationPageState extends State<InvitationPage> {
                                           context),
                                     ),
                                   ),
-                                  SizedBox(height: tinggiLayar * 0.02),
-
-                                  FadeInUp(
+                                  SizedBox(height: tinggiLayar * 0.03),
+                                  FadeInRight(
                                     child: TiltParallax(
-                                      size: const Offset(15, 20),
-                                      child: TeksBiasa(
-                                          'Yang Insyaallah akan diselenggarakan pada:',
-                                          context),
-                                    ),
-                                  ),
-                                  FadeInUp(
-                                    child: TiltParallax(
-                                      size: const Offset(15, 20),
-                                      child: TeksWaktuBold(
-                                          'Sabtu, 27 Desember 2025', context),
-                                    ),
-                                  ),
-                                  SizedBox(height: tinggiLayar * 0.02),
-                                  Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Column(
-                                          children: [
-                                            //akad
-                                            FadeInLeft(
-                                              child: TiltParallax(
-                                                size: const Offset(15, 20),
-                                                child:
-                                                    TeksBiasa('Akad', context),
-                                              ),
-                                            ),
-                                            //pukul
-                                            FadeInLeft(
-                                              child: TiltParallax(
-                                                size: const Offset(15, 20),
-                                                child: TeksWaktuBold(
-                                                    '09.00 WIB', context),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Column(
-                                          children: [
-                                            //walimatul ursy
-                                            FadeInRight(
-                                              child: TiltParallax(
-                                                size: const Offset(15, 20),
-                                                child: TeksBiasa(
-                                                    'Walimatul Ursy', context),
-                                              ),
-                                            ),
-                                            //pukul
-                                            FadeInRight(
-                                              child: TiltParallax(
-                                                size: const Offset(15, 20),
-                                                child: TeksWaktuBold(
-                                                    '10.00 WIB', context),
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      ]),
-                                  SizedBox(height: tinggiLayar * 0.02),
-                                  FadeInUp(
-                                    child: TiltParallax(
-                                      size: const Offset(15, 20),
-                                      child: TeksBiasa('Bertempat di', context),
-                                    ),
-                                  ),
-                                  FadeInUp(
-                                    child: TiltParallax(
-                                      size: const Offset(15, 20),
-                                      child: TeksBiasaBold(
-                                          'Perum. BTN Cicadas Mas Permai',
-                                          context),
-                                    ),
-                                  ),
-                                  FadeInUp(
-                                    child: TiltParallax(
-                                      size: const Offset(15, 20),
-                                      child: TeksBiasaBold(
-                                          'Blok D3 No.13, Rt/Rw. 004/014',
-                                          context),
-                                    ),
-                                  ),
-                                  FadeInUp(
-                                    child: TiltParallax(
-                                      size: const Offset(15, 20),
-                                      child: TeksBiasaBold(
-                                          'Ds. Cicadas, Kec. Gunung Putri - Kab.Bogor',
-                                          context),
-                                    ),
+                                        size: const Offset(15, 20),
+                                        child: Text(
+                                            'Info lebih lanjut ketuk tombol ❤︎ ya..',
+                                            style: GoogleFonts.poppins(
+                                              textStyle: const TextStyle(
+                                                  fontStyle: FontStyle.italic),
+                                              fontSize: MediaQuery.of(context)
+                                                      .size
+                                                      .width *
+                                                  0.03,
+                                              color: Colors.brown[900],
+                                            ))),
                                   ),
                                 ],
                               ),
