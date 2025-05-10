@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
@@ -49,7 +50,11 @@ class InvitationPage extends StatefulWidget {
 
 class _InvitationPageState extends State<InvitationPage> {
   String guestNameAfterDecode = '';
+  String guestCode = '';
   bool isLoading = true;
+
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool isPlaying = false;
 
   Future<void> fetchSheetData() async {
     final response = await http.get(
@@ -69,6 +74,7 @@ class _InvitationPageState extends State<InvitationPage> {
       );
 
       setState(() {
+        guestCode = foundGuest.isNotEmpty ? foundGuest['Kode Undangan'] : '';
         guestNameAfterDecode = foundGuest.isNotEmpty
             ? '${foundGuest['Title']} ${foundGuest['Nama Undangan']}'
             : '';
@@ -92,6 +98,23 @@ class _InvitationPageState extends State<InvitationPage> {
     ));
 
     fetchSheetData();
+  }
+
+  void toggleAudio() async {
+    if (isPlaying) {
+      await _audioPlayer.stop();
+    } else {
+      await _audioPlayer.play(AssetSource('weddingassets/kekal.mp3'));
+    }
+    setState(() {
+      isPlaying = !isPlaying;
+    });
+  }
+
+  @override
+  void dispose() {
+    _audioPlayer.dispose();
+    super.dispose();
   }
 
   @override
@@ -146,6 +169,24 @@ class _InvitationPageState extends State<InvitationPage> {
           floatingActionButton: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              //Audio button
+              FloatingActionButton(
+                backgroundColor: Colors.white70,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(100.0),
+                ),
+                child: Icon(
+                  isPlaying ? Icons.stop : Icons.play_arrow,
+                  color: Colors.pink,
+                ),
+                onPressed: () {
+                  // showTabModal(context, guestNameAfterDecode, guestCode);
+                  toggleAudio();
+                },
+              ),
+
+              //Love button
               FloatingActionButton(
                 backgroundColor: Colors.white70,
                 elevation: 0,
@@ -157,94 +198,7 @@ class _InvitationPageState extends State<InvitationPage> {
                   color: Colors.pink,
                 ),
                 onPressed: () {
-                  showTabModal(context);
-                  // showModalBottomSheet(
-                  //     context: context,
-                  //     builder: (context) {
-                  //       return Column(
-                  //         children: [
-                  //           // showTabModal(context),
-                  //           showTabModal(context),
-                  //           Row(
-                  //               mainAxisAlignment:
-                  //                   MainAxisAlignment.spaceEvenly,
-                  //               children: [
-                  //                 Column(
-                  //                   children: [
-                  //                     IconButton(
-                  //                         icon: Icon(
-                  //                           Icons.location_on,
-                  //                           color: Colors.red,
-                  //                         ),
-                  //                         onPressed: () {}),
-                  //                     TeksBiasa('Lokasi Acara', context)
-                  //                   ],
-                  //                 ),
-                  //                 Column(
-                  //                   children: [
-                  //                     IconButton(
-                  //                         icon: Icon(
-                  //                           Icons.chat_rounded,
-                  //                           color: Colors.black,
-                  //                         ),
-                  //                         onPressed: () {}),
-                  //                     TeksBiasa('Kirim Ucapan', context)
-                  //                   ],
-                  //                 ),
-                  //               ]),
-                  //           Column(
-                  //             children: [
-                  //               Text('ini perangkat ${deviceType}'),
-                  //               Text('OS yang digunakan ${mobileOS}'),
-                  //               Text(ukuranLayar),
-                  //               Text(
-                  //                   'ukurannya read: ${lebarLayar} x ${tinggiLayar}'),
-                  //             ],
-                  //           ),
-                  //         ],
-                  //       );
-                  //     });
-
-                  // showAboutDialog(
-                  //   context: context,
-                  //   children: [
-                  //     Row(
-                  //         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //         children: [
-                  //           Column(
-                  //             children: [
-                  //               IconButton(
-                  //                   icon: Icon(
-                  //                     Icons.location_on,
-                  //                     color: Colors.red,
-                  //                   ),
-                  //                   onPressed: () {}),
-                  //               TeksBiasa('Lokasi Acara', context)
-                  //             ],
-                  //           ),
-                  //           Column(
-                  //             children: [
-                  //               IconButton(
-                  //                   icon: Icon(
-                  //                     Icons.chat_rounded,
-                  //                     color: Colors.black,
-                  //                   ),
-                  //                   onPressed: () {}),
-                  //               TeksBiasa('Kirim Ucapan', context)
-                  //             ],
-                  //           ),
-                  //         ]),
-                  //     Column(
-                  //       children: [
-                  //         Text('ini perangkat ${deviceType}'),
-                  //         Text('OS yang digunakan ${mobileOS}'),
-                  //         Text(ukuranLayar),
-                  //         Text(
-                  //             'ukurannya read: ${lebarLayar} x ${tinggiLayar}'),
-                  //       ],
-                  //     ),
-                  //   ],
-                  // );
+                  showTabModal(context, guestNameAfterDecode, guestCode);
                 },
               ),
             ],
