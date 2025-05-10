@@ -254,27 +254,36 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                                               data: guestCode,
                                               decoration:
                                                   const PrettyQrDecoration(
-                                                image: PrettyQrDecorationImage(
-                                                  image: AssetImage(
-                                                      'images/flutter.png'),
-                                                ),
                                                 quietZone:
                                                     PrettyQrQuietZone.zero,
                                               ),
                                             ),
                                           ),
+                                          SizedBox(height: 10),
+                                          Text(guestCode,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 15,
+                                                color: Colors.brown[900],
+                                                fontWeight: FontWeight.bold,
+                                              )),
                                           SizedBox(height: 20),
                                           TeksBiasa('Tamu undangan', context),
                                           TeksBiasaBold(
                                               '${guestName}', context),
                                           SizedBox(height: 20),
                                           Container(
-                                            color: Colors.pink[50],
+                                            decoration: BoxDecoration(
+                                              // color: Colors.green[50],
+                                              color: Colors.pink[50],
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
                                             child: DottedBorder(
                                               color: Colors.pink,
+                                              // color: Colors.green,
                                               strokeWidth: 1,
                                               borderType: BorderType.RRect,
-                                              radius: Radius.circular(5),
+                                              radius: Radius.circular(20),
                                               dashPattern: [
                                                 6,
                                                 3
@@ -283,6 +292,204 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                                                 padding: EdgeInsets.all(10),
                                                 child: Column(
                                                   children: [
+                                                    DottedBorder(
+                                                      color: Colors.pink,
+                                                      // color: Colors.green,
+                                                      strokeWidth: 1,
+                                                      borderType:
+                                                          BorderType.RRect,
+                                                      radius:
+                                                          Radius.circular(20),
+                                                      dashPattern: [
+                                                        6,
+                                                        3
+                                                      ], // 6px garis, 3px spasi
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                        ),
+                                                        padding:
+                                                            EdgeInsets.all(10),
+                                                        child:
+                                                            //Belum diambil
+                                                            Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Icon(
+                                                              Icons.info,
+                                                              // Icons
+                                                              //     .check_circle,
+                                                              color:
+                                                                  Colors.pink,
+                                                              // color:
+                                                              //     Colors.green,
+                                                            ),
+                                                            SizedBox(width: 5),
+                                                            Text(
+                                                              'Souvenir belum diambil',
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .brown[900],
+                                                                fontStyle:
+                                                                    FontStyle
+                                                                        .italic,
+                                                              ),
+                                                            ),
+
+                                                            // Text(
+                                                            //   'Souvenir sudah diambil',
+                                                            //   textAlign:
+                                                            //       TextAlign
+                                                            //           .center,
+                                                            //   style: GoogleFonts
+                                                            //       .poppins(
+                                                            //     fontSize: 12,
+                                                            //     color: Colors
+                                                            //         .brown[900],
+                                                            //     fontStyle:
+                                                            //         FontStyle
+                                                            //             .italic,
+                                                            //   ),
+                                                            // ),
+                                                          ],
+                                                        ),
+
+                                                        // //Belum diambil
+                                                        // Row(
+                                                        //   mainAxisSize:
+                                                        //       MainAxisSize.min,
+                                                        //   children: [
+                                                        //     Icon(
+                                                        //       Icons.info,
+                                                        //       color:
+                                                        //           Colors.pink,
+                                                        //     ),
+                                                        //     SizedBox(width: 5),
+                                                        //     Text(
+                                                        //       'Souvenir belum diambil',
+                                                        //       textAlign:
+                                                        //           TextAlign
+                                                        //               .center,
+                                                        //       style: GoogleFonts
+                                                        //           .poppins(
+                                                        //         fontSize: 12,
+                                                        //         color: Colors
+                                                        //             .brown[900],
+                                                        //         fontStyle:
+                                                        //             FontStyle
+                                                        //                 .italic,
+                                                        //       ),
+                                                        //     ),
+                                                        //   ],
+                                                        // ),
+                                                      ),
+                                                    ),
+                                                    // Visibility(
+                                                    //   visible: false,
+                                                    //   child: Row(
+                                                    //       mainAxisAlignment:
+                                                    //           MainAxisAlignment
+                                                    //               .center,
+                                                    //       children: [
+                                                    //         SizedBox(
+                                                    //             height: 10),
+                                                    //         Text(
+                                                    //           'Dengan tulus, kami mengucapkan terima kasih atas kehadiran Anda, ini sangat berarti dan membuat kami semakin bahagia.',
+                                                    //           textAlign:
+                                                    //               TextAlign
+                                                    //                   .center,
+                                                    //           style: GoogleFonts
+                                                    //               .poppins(
+                                                    //             fontSize: 12,
+                                                    //             color: Colors
+                                                    //                 .brown[900],
+                                                    //             fontStyle:
+                                                    //                 FontStyle
+                                                    //                     .normal,
+                                                    //           ),
+                                                    //         ),
+                                                    //         SizedBox(
+                                                    //             height: 10),
+                                                    //         Text(
+                                                    //           'Semoga kebahagiaan selalu menyertai kita semua.',
+                                                    //           textAlign:
+                                                    //               TextAlign
+                                                    //                   .center,
+                                                    //           style: GoogleFonts
+                                                    //               .poppins(
+                                                    //             fontSize: 12,
+                                                    //             color: Colors
+                                                    //                 .brown[900],
+                                                    //             fontStyle:
+                                                    //                 FontStyle
+                                                    //                     .normal,
+                                                    //           ),
+                                                    //         ),
+                                                    //         Text(
+                                                    //           'Aamiin Allahumma Aamiin ❤︎',
+                                                    //           textAlign:
+                                                    //               TextAlign
+                                                    //                   .center,
+                                                    //           style: GoogleFonts
+                                                    //               .poppins(
+                                                    //             fontSize: 12,
+                                                    //             color: Colors
+                                                    //                 .brown[900],
+                                                    //             fontStyle:
+                                                    //                 FontStyle
+                                                    //                     .normal,
+                                                    //           ),
+                                                    //         ),
+                                                    //         SizedBox(
+                                                    //             height: 20),
+                                                    //         Text(
+                                                    //           'Kami yang berbahagia:',
+                                                    //           textAlign:
+                                                    //               TextAlign
+                                                    //                   .center,
+                                                    //           style: GoogleFonts
+                                                    //               .poppins(
+                                                    //             fontSize: 12,
+                                                    //             color: Colors
+                                                    //                 .brown[900],
+                                                    //             fontStyle:
+                                                    //                 FontStyle
+                                                    //                     .normal,
+                                                    //           ),
+                                                    //         ),
+                                                    //         Text(
+                                                    //           'Novia & Ivan',
+                                                    //           textAlign:
+                                                    //               TextAlign
+                                                    //                   .center,
+                                                    //           style: GoogleFonts
+                                                    //               .msMadi(
+                                                    //             fontSize: 40,
+                                                    //             color: Colors
+                                                    //                 .brown[900],
+                                                    //             fontWeight:
+                                                    //                 FontWeight
+                                                    //                     .bold,
+                                                    //             fontStyle:
+                                                    //                 FontStyle
+                                                    //                     .normal,
+                                                    //           ),
+                                                    //         ),
+                                                    //       ]),
+                                                    // ),
+
+                                                    // TeksBiasaBold(
+                                                    //     'Novia & Ivan', context)
                                                     Text(
                                                       'Tukarkan kode barcode ini dengan souvenir yg tersedia.',
                                                       textAlign:

@@ -343,6 +343,7 @@ class _InvitationPageState extends State<InvitationPage> {
                                               color: Colors.brown[900],
                                             ))),
                                   ),
+                                  SizedBox(height: tinggiLayar * 0.1),
                                 ],
                               ),
                             ]),
