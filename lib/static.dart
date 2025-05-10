@@ -62,7 +62,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
     ),
     builder: (context) {
       return DefaultTabController(
-        length: 3,
+        length: 4,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -299,7 +299,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                                                       borderType:
                                                           BorderType.RRect,
                                                       radius:
-                                                          Radius.circular(20),
+                                                          Radius.circular(10),
                                                       dashPattern: [
                                                         6,
                                                         3
@@ -310,7 +310,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                                                           color: Colors.white,
                                                           borderRadius:
                                                               BorderRadius
-                                                                  .circular(20),
+                                                                  .circular(10),
                                                         ),
                                                         padding:
                                                             EdgeInsets.all(10),
@@ -488,8 +488,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                                                     //       ]),
                                                     // ),
 
-                                                    // TeksBiasaBold(
-                                                    //     'Novia & Ivan', context)
+                                                    SizedBox(height: 10),
                                                     Text(
                                                       'Tukarkan kode barcode ini dengan souvenir yg tersedia.',
                                                       textAlign:
@@ -530,21 +529,59 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                         ]),
                         child: Container()),
                   )),
+
+                  //Lainnya
+                  Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: SingleChildScrollView(
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(height: 20),
+                            TeksBiasa("Cerita Pengantin awal.", context),
+                            SizedBox(height: 20),
+                            TeksBiasa("Fotonya kalau ada.", context),
+                            SizedBox(height: 20),
+                            TeksBiasa("Cerita Pengantin akhir.", context),
+                            SizedBox(height: 20),
+                            TeksBiasa("Doa-doa.", context),
+                            SizedBox(height: 20),
+                            TeksBiasa("Kirim Hadiah ke pengantin.", context),
+                            SizedBox(height: 20),
+                            Container(
+                              width: 100,
+                              height: 600,
+                              decoration: BoxDecoration(
+                                color: Colors.brown[900],
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            Container(
+                              width: 100,
+                              height: 600,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                              ),
+                            )
+                          ]),
+                    ),
+                  )
                 ],
               ),
             ),
             TabBar(
+              // isScrollable: true,
               overlayColor: WidgetStateProperty.all(Colors.transparent),
               dividerColor: Colors.transparent,
               tabs: [
                 //Tab Waktu
                 Tab(
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.calendar_month_rounded,
-                        color: Colors.brown[900],
+                        // color: Colors.brown[900],
                       ),
                       SizedBox(width: 5),
                       TeksBiasa("Waktu", context),
@@ -554,12 +591,12 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
 
                 //Tab Lokasi
                 Tab(
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.location_on_rounded,
-                        color: Colors.brown[900],
+                        // color: Colors.brown[900],
                       ),
                       SizedBox(width: 5),
                       TeksBiasa("Lokasi", context),
@@ -569,22 +606,45 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
 
                 //Tab Kupon
                 Tab(
-                  child: Row(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
                         Icons.cake,
-                        color: Colors.brown[900],
+                        // color: Colors.brown[900],
                       ),
                       SizedBox(width: 5),
                       TeksBiasa("Souvenir", context),
                     ],
                   ),
                 ),
+
+                //Tab Kupon
+                Tab(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.favorite,
+                        // color: Colors.brown[900],
+                      ),
+                      SizedBox(width: 5),
+                      TeksBiasa("Lainnya", context),
+                    ],
+                  ),
+                ),
               ],
-              labelColor: Colors.brown,
+              labelColor: Colors.pink,
               unselectedLabelColor: Colors.grey,
-              indicatorColor: Colors.brown,
+              // indicatorColor: Colors.pink,
+              indicator: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: Colors.pink,
+                    width: 2,
+                  ),
+                ),
+              ),
             ),
             SizedBox(height: 20),
             TextButton(
@@ -598,7 +658,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                   Navigator.pop(context);
                 },
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(6.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -607,7 +667,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                         Icons.keyboard_arrow_down_rounded,
                         color: Colors.white,
                       ),
-                      SizedBox(width: 5),
+                      SizedBox(width: 4),
                       Text(
                         'Tutup slide',
                         style: TextStyle(color: Colors.white),
