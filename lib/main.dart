@@ -52,13 +52,14 @@ class _IvanMiniAppState extends State<IvanMiniApp> {
             path: '/:guestName',
             builder: (context, state) {
               final guestName = state.pathParameters['guestName']!;
-              if (fetchSheetData(guestName) == '') return BelumDiundangPage();
+              if (fetchSheetDataPlain(guestName) == '')
+                return BelumDiundangPage();
               return InvitationPage(guestName: guestName);
             }),
 
         // Souvenir Updater
         GoRoute(
-          path: '/app/souvenir_updater',
+          path: '/app/souvenir',
           builder: (context, state) => SouvenirUpdaterApp(),
         ),
       ],

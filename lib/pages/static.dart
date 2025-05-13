@@ -77,7 +77,7 @@ Future<void> updateSouvenirStatus(int row, String status) async {
   }
 }
 
-Future fetchSheetData(String guestName) async {
+Future fetchSheetDataPlain(String guestName) async {
   final response = await http.get(
     Uri.parse(
       'https://opensheet.elk.sh/1IFycFK3i-AzaZepz0C03dpkoMxemwrBQ45WjwKYVmEU/TamuUndanganwithCode',
@@ -94,9 +94,16 @@ Future fetchSheetData(String guestName) async {
       orElse: () => {},
     );
 
-    foundGuest.isEmpty ? 'kosong' : foundGuest;
+    // foundGuest.isEmpty ? 'kosong' : foundGuest;
+    if (foundGuest.isEmpty) {
+      return 'kosong';
+    } else {
+      print('Souvenirnya bang: ${foundGuest['Souvenir']}');
 
-    return foundGuest;
+      return foundGuest;
+    }
+
+    // return foundGuest;
 
     // if (foundGuest.isEmpty) {
     //   // Redirect ke halaman lain kalau tidak ditemukan

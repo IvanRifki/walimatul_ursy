@@ -139,6 +139,7 @@ class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
       );
 
       if (response.statusCode == 200) {
+        _cariBarisKodeUndangan(_kodeController.text);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("✅ Sukses update souvenir")),
         );

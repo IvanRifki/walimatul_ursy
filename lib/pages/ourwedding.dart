@@ -9,7 +9,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
-import 'package:walimatul_ursy/pages/belumdiundang.dart';
 import 'package:walimatul_ursy/pages/modalbottom.dart';
 import 'package:walimatul_ursy/pages/static.dart';
 
@@ -102,6 +101,8 @@ class _InvitationPageState extends State<InvitationPage> {
   //   }
   // }
 
+  String souvenirStatus = 'Belum diambil';
+
   Future<void> fetchSheetData() async {
     try {
       final response = await http.get(
@@ -133,6 +134,8 @@ class _InvitationPageState extends State<InvitationPage> {
             guestCode = foundGuest['Kode Undangan'];
             guestNameAfterDecode =
                 '${foundGuest['Title']} ${foundGuest['Nama Undangan']}';
+            souvenirStatus =
+                foundGuest['Souvenir'] ?? 'Belum diambil'; // Add this line
             isLoading = false;
           });
         }
@@ -141,6 +144,7 @@ class _InvitationPageState extends State<InvitationPage> {
         if (mounted) {
           setState(() {
             guestNameAfterDecode = '';
+            souvenirStatus = 'Belum diambil'; // Default value if fetch fails
             isLoading = false;
           });
         }
@@ -150,11 +154,66 @@ class _InvitationPageState extends State<InvitationPage> {
       if (mounted) {
         setState(() {
           guestNameAfterDecode = '';
+          souvenirStatus = 'Belum diambil'; // Default value on error
           isLoading = false;
         });
       }
     }
   }
+
+  // Future<void> fetchSheetData() async {
+  //   try {
+  //     final response = await http.get(
+  //       Uri.parse(
+  //         'https://opensheet.elk.sh/1IFycFK3i-AzaZepz0C03dpkoMxemwrBQ45WjwKYVmEU/TamuUndanganwithCode',
+  //       ),
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> data = jsonDecode(response.body);
+  //       final List<Map<String, dynamic>> sheetDataTamu =
+  //           data.cast<Map<String, dynamic>>();
+
+  //       final foundGuest = sheetDataTamu.firstWhere(
+  //         (item) => item['Kode Undangan'].toString() == widget.guestName,
+  //         orElse: () => {},
+  //       );
+
+  //       if (foundGuest.isEmpty) {
+  //         if (mounted) {
+  //           // Gunakan go_router redirect
+  //           GoRouter.of(context).go('/');
+  //         }
+  //         return;
+  //       }
+
+  //       if (mounted) {
+  //         setState(() {
+  //           guestCode = foundGuest['Kode Undangan'];
+  //           guestNameAfterDecode =
+  //               '${foundGuest['Title']} ${foundGuest['Nama Undangan']}';
+  //           isLoading = false;
+  //         });
+  //       }
+  //     } else {
+  //       // Gagal fetch data
+  //       if (mounted) {
+  //         setState(() {
+  //           guestNameAfterDecode = '';
+  //           isLoading = false;
+  //         });
+  //       }
+  //     }
+  //   } catch (e) {
+  //     print('Error: $e');
+  //     if (mounted) {
+  //       setState(() {
+  //         guestNameAfterDecode = '';
+  //         isLoading = false;
+  //       });
+  //     }
+  //   }
+  // }
 
   @override
   void initState() {
@@ -196,8 +255,6 @@ class _InvitationPageState extends State<InvitationPage> {
 
     int lebarLayar = MediaQuery.of(context).size.width.toInt();
     int tinggiLayar = MediaQuery.of(context).size.height.toInt();
-
-    print('ini width ${MediaQuery.of(context).size.width}');
 
     if (userAgent.contains("mobile") ||
         userAgent.contains("android") ||
@@ -265,7 +322,7 @@ class _InvitationPageState extends State<InvitationPage> {
                   Icons.favorite,
                   color: Colors.pink,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   showTabModal(context, guestNameAfterDecode, guestCode);
                 },
               ),

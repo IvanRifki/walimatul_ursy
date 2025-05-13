@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:walimatul_ursy/pages/static.dart';
 // import 'package:universal_html/html.dart';
 
 const String mapsUrl = 'https://maps.app.goo.gl/opSoVsW2TGiraoMS7';
+
+var Statusnya = {};
 
 Future<void> _openMaps() async {
   final Uri url = Uri.parse(mapsUrl);
@@ -21,7 +24,16 @@ Future<void> _openMaps() async {
   }
 }
 
-void showTabModal(BuildContext context, String guestName, String guestCode) {
+void showTabModal(
+    BuildContext context, String guestName, String guestCode) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.clear();
+  Statusnya.clear();
+  Statusnya = await fetchSheetDataPlain(guestCode);
+  // print('ini statusnya bang ${Statusnya['Souvenir']}');
+
+  String SouvenirStatus = Statusnya['Souvenir'];
+
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -245,14 +257,18 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                                           SizedBox(height: 20),
                                           Container(
                                             decoration: BoxDecoration(
-                                              // color: Colors.green[50],
-                                              color: Colors.pink[50],
+                                              color: SouvenirStatus.contains(
+                                                      'Belum')
+                                                  ? Colors.pink[50]
+                                                  : Colors.green[50],
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
                                             child: DottedBorder(
-                                              color: Colors.pink,
-                                              // color: Colors.green,
+                                              color: SouvenirStatus.contains(
+                                                      'Belum')
+                                                  ? Colors.pink
+                                                  : Colors.green,
                                               strokeWidth: 1,
                                               borderType: BorderType.RRect,
                                               radius: Radius.circular(20),
@@ -265,8 +281,10 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                                                 child: Column(
                                                   children: [
                                                     DottedBorder(
-                                                      color: Colors.pink,
-                                                      // color: Colors.green,
+                                                      color: SouvenirStatus
+                                                              .contains('Belum')
+                                                          ? Colors.pink
+                                                          : Colors.green,
                                                       strokeWidth: 1,
                                                       borderType:
                                                           BorderType.RRect,
@@ -292,18 +310,27 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                                                           mainAxisSize:
                                                               MainAxisSize.min,
                                                           children: [
-                                                            Icon(
-                                                              Icons.info,
-                                                              // Icons
-                                                              //     .check_circle,
-                                                              color:
-                                                                  Colors.pink,
-                                                              // color:
-                                                              //     Colors.green,
-                                                            ),
+                                                            SouvenirStatus
+                                                                    .contains(
+                                                                        'Belum')
+                                                                ? Icon(
+                                                                    Icons.info,
+                                                                    color: Colors
+                                                                        .pink,
+                                                                  )
+                                                                : Icon(
+                                                                    Icons
+                                                                        .check_circle,
+                                                                    color: Colors
+                                                                        .green,
+                                                                  ),
                                                             SizedBox(width: 5),
                                                             Text(
-                                                              'Souvenir belum diambil',
+                                                              SouvenirStatus
+                                                                      .contains(
+                                                                          'Belum')
+                                                                  ? 'Souvenir belum diambil'
+                                                                  : 'Souvenir sudah diambil',
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -317,163 +344,126 @@ void showTabModal(BuildContext context, String guestName, String guestCode) {
                                                                         .italic,
                                                               ),
                                                             ),
-
-                                                            // Text(
-                                                            //   'Souvenir sudah diambil',
-                                                            //   textAlign:
-                                                            //       TextAlign
-                                                            //           .center,
-                                                            //   style: GoogleFonts
-                                                            //       .poppins(
-                                                            //     fontSize: 12,
-                                                            //     color: Colors
-                                                            //         .brown[900],
-                                                            //     fontStyle:
-                                                            //         FontStyle
-                                                            //             .italic,
-                                                            //   ),
-                                                            // ),
                                                           ],
                                                         ),
-
-                                                        // //Belum diambil
-                                                        // Row(
-                                                        //   mainAxisSize:
-                                                        //       MainAxisSize.min,
-                                                        //   children: [
-                                                        //     Icon(
-                                                        //       Icons.info,
-                                                        //       color:
-                                                        //           Colors.pink,
-                                                        //     ),
-                                                        //     SizedBox(width: 5),
-                                                        //     Text(
-                                                        //       'Souvenir belum diambil',
-                                                        //       textAlign:
-                                                        //           TextAlign
-                                                        //               .center,
-                                                        //       style: GoogleFonts
-                                                        //           .poppins(
-                                                        //         fontSize: 12,
-                                                        //         color: Colors
-                                                        //             .brown[900],
-                                                        //         fontStyle:
-                                                        //             FontStyle
-                                                        //                 .italic,
-                                                        //       ),
-                                                        //     ),
-                                                        //   ],
-                                                        // ),
                                                       ),
                                                     ),
-                                                    // Visibility(
-                                                    //   visible: false,
-                                                    //   child: Row(
-                                                    //       mainAxisAlignment:
-                                                    //           MainAxisAlignment
-                                                    //               .center,
-                                                    //       children: [
-                                                    //         SizedBox(
-                                                    //             height: 10),
-                                                    //         Text(
-                                                    //           'Dengan tulus, kami mengucapkan terima kasih atas kehadiran Anda, ini sangat berarti dan membuat kami semakin bahagia.',
-                                                    //           textAlign:
-                                                    //               TextAlign
-                                                    //                   .center,
-                                                    //           style: GoogleFonts
-                                                    //               .poppins(
-                                                    //             fontSize: 12,
-                                                    //             color: Colors
-                                                    //                 .brown[900],
-                                                    //             fontStyle:
-                                                    //                 FontStyle
-                                                    //                     .normal,
-                                                    //           ),
-                                                    //         ),
-                                                    //         SizedBox(
-                                                    //             height: 10),
-                                                    //         Text(
-                                                    //           'Semoga kebahagiaan selalu menyertai kita semua.',
-                                                    //           textAlign:
-                                                    //               TextAlign
-                                                    //                   .center,
-                                                    //           style: GoogleFonts
-                                                    //               .poppins(
-                                                    //             fontSize: 12,
-                                                    //             color: Colors
-                                                    //                 .brown[900],
-                                                    //             fontStyle:
-                                                    //                 FontStyle
-                                                    //                     .normal,
-                                                    //           ),
-                                                    //         ),
-                                                    //         Text(
-                                                    //           'Aamiin Allahumma Aamiin ❤︎',
-                                                    //           textAlign:
-                                                    //               TextAlign
-                                                    //                   .center,
-                                                    //           style: GoogleFonts
-                                                    //               .poppins(
-                                                    //             fontSize: 12,
-                                                    //             color: Colors
-                                                    //                 .brown[900],
-                                                    //             fontStyle:
-                                                    //                 FontStyle
-                                                    //                     .normal,
-                                                    //           ),
-                                                    //         ),
-                                                    //         SizedBox(
-                                                    //             height: 20),
-                                                    //         Text(
-                                                    //           'Kami yang berbahagia:',
-                                                    //           textAlign:
-                                                    //               TextAlign
-                                                    //                   .center,
-                                                    //           style: GoogleFonts
-                                                    //               .poppins(
-                                                    //             fontSize: 12,
-                                                    //             color: Colors
-                                                    //                 .brown[900],
-                                                    //             fontStyle:
-                                                    //                 FontStyle
-                                                    //                     .normal,
-                                                    //           ),
-                                                    //         ),
-                                                    //         Text(
-                                                    //           'Novia & Ivan',
-                                                    //           textAlign:
-                                                    //               TextAlign
-                                                    //                   .center,
-                                                    //           style: GoogleFonts
-                                                    //               .msMadi(
-                                                    //             fontSize: 40,
-                                                    //             color: Colors
-                                                    //                 .brown[900],
-                                                    //             fontWeight:
-                                                    //                 FontWeight
-                                                    //                     .bold,
-                                                    //             fontStyle:
-                                                    //                 FontStyle
-                                                    //                     .normal,
-                                                    //           ),
-                                                    //         ),
-                                                    //       ]),
-                                                    // ),
-
                                                     SizedBox(height: 10),
-                                                    Text(
-                                                      'Tukarkan kode barcode ini dengan souvenir yg tersedia.',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        fontSize: 12,
-                                                        color:
-                                                            Colors.brown[900],
-                                                        fontStyle:
-                                                            FontStyle.italic,
-                                                      ),
-                                                    ),
+                                                    SouvenirStatus.contains(
+                                                            'Sudah')
+                                                        ? Column(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                                Text(
+                                                                  'Dengan tulus, kami mengucapkan terima kasih atas kehadiran Anda, ini sangat berarti dan membuat kami semakin bahagia.',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: Colors
+                                                                            .brown[
+                                                                        900],
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .normal,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 10),
+                                                                Text(
+                                                                  'Semoga kebahagiaan selalu menyertai kita semua.',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: Colors
+                                                                            .brown[
+                                                                        900],
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .normal,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  'Aamiin Allahumma Aamiin ❤︎',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: Colors
+                                                                            .brown[
+                                                                        900],
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .normal,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                    height: 20),
+                                                                Text(
+                                                                  'Kami yang berbahagia:',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style: GoogleFonts
+                                                                      .poppins(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: Colors
+                                                                            .brown[
+                                                                        900],
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .normal,
+                                                                  ),
+                                                                ),
+                                                                Text(
+                                                                  'Novia & Ivan',
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                  style:
+                                                                      GoogleFonts
+                                                                          .msMadi(
+                                                                    fontSize:
+                                                                        40,
+                                                                    color: Colors
+                                                                            .brown[
+                                                                        900],
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .normal,
+                                                                  ),
+                                                                ),
+                                                              ])
+                                                        : Text(
+                                                            'Tukarkan kode barcode ini dengan souvenir yg tersedia.',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              fontSize: 12,
+                                                              color: Colors
+                                                                  .brown[900],
+                                                              fontStyle:
+                                                                  FontStyle
+                                                                      .italic,
+                                                            ),
+                                                          ),
                                                     Text(
                                                       '1 Souvenir untuk 1 tamu undangan.',
                                                       textAlign:
