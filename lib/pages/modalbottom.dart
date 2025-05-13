@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
-import 'package:walimatul_ursy/static.dart';
+import 'package:walimatul_ursy/pages/static.dart';
 // import 'package:universal_html/html.dart';
 
 const String mapsUrl = 'https://maps.app.goo.gl/opSoVsW2TGiraoMS7';

@@ -4,9 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 import 'package:walimatul_ursy/pages/belumdiundang.dart';
 import 'package:walimatul_ursy/pages/ourwedding.dart';
+import 'package:walimatul_ursy/pages/souvenir_updater.dart';
+import 'package:walimatul_ursy/pages/static.dart';
 
 void main() {
   setUrlStrategy(PathUrlStrategy());
+
   runApp(IvanMiniApp());
 }
 
@@ -43,25 +46,21 @@ class _IvanMiniAppState extends State<IvanMiniApp> {
           path: '/',
           builder: (context, state) => BelumDiundangPage(),
         ),
-        //langsung diarahin ke halaman wedding
-        // GoRoute(
-        //   path: '/',
-        //   builder: (context, state) => InvitationPage(guestName: 'nvBM78v6'),
-        // ),
 
         // WEDDING SECTION START
         GoRoute(
-          path: '/:guestName',
-          builder: (context, state) => InvitationPage(
-            guestName: state.pathParameters['guestName']!,
-          ),
+            path: '/:guestName',
+            builder: (context, state) {
+              final guestName = state.pathParameters['guestName']!;
+              if (fetchSheetData(guestName) == '') return BelumDiundangPage();
+              return InvitationPage(guestName: guestName);
+            }),
+
+        // Souvenir Updater
+        GoRoute(
+          path: '/app/souvenir_updater',
+          builder: (context, state) => SouvenirUpdaterApp(),
         ),
-        // GoRoute(
-        //   path: '/:guestName',
-        //   builder: (context, state) => InvitationPage(
-        //     guestName: state.pathParameters['guestName']!,
-        //   ),
-        // ),
       ],
     );
 

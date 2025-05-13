@@ -7,7 +7,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
-import 'package:walimatul_ursy/static.dart';
+import 'package:walimatul_ursy/pages/static.dart';
 
 void main() {
   final uri = Uri.base;

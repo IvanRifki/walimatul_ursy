@@ -3,13 +3,15 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
+import 'package:walimatul_ursy/pages/belumdiundang.dart';
 import 'package:walimatul_ursy/pages/modalbottom.dart';
-import 'package:walimatul_ursy/static.dart';
+import 'package:walimatul_ursy/pages/static.dart';
 
 void main() {
   final uri = Uri.base;
@@ -57,35 +59,100 @@ class _InvitationPageState extends State<InvitationPage> {
   final AudioPlayer _audioPlayer = AudioPlayer();
   bool isPlaying = false;
 
+  // Future<void> fetchSheetData() async {
+  //   final response = await http.get(
+  //     Uri.parse(
+  //       'https://opensheet.elk.sh/1IFycFK3i-AzaZepz0C03dpkoMxemwrBQ45WjwKYVmEU/TamuUndanganwithCode',
+  //     ),
+  //   );
+
+  //   if (response.statusCode == 200) {
+  //     final List<dynamic> data = jsonDecode(response.body);
+  //     final List<Map<String, dynamic>> sheetDataTamu =
+  //         data.cast<Map<String, dynamic>>();
+
+  //     final foundGuest = sheetDataTamu.firstWhere(
+  //       (item) => item['Kode Undangan'].toString() == widget.guestName,
+  //       orElse: () => {},
+  //     );
+
+  //     if (foundGuest.isEmpty) {
+  //       // Redirect ke halaman lain kalau tidak ditemukan
+  //       if (mounted) {
+  //         Navigator.pushReplacement(
+  //           context,
+  //           MaterialPageRoute(
+  //               builder: (_) => BelumDiundangPage()), // ganti sesuai halamanmu
+  //         );
+  //       }
+  //       return;
+  //     }
+
+  //     setState(() {
+  //       guestCode = foundGuest['Kode Undangan'];
+  //       guestNameAfterDecode =
+  //           '${foundGuest['Title']} ${foundGuest['Nama Undangan']}';
+  //       isLoading = false;
+  //     });
+  //   } else {
+  //     setState(() {
+  //       guestNameAfterDecode = '';
+  //       isLoading = false;
+  //     });
+  //   }
+  // }
+
   Future<void> fetchSheetData() async {
-    final response = await http.get(
-      Uri.parse(
-        'https://opensheet.elk.sh/1IFycFK3i-AzaZepz0C03dpkoMxemwrBQ45WjwKYVmEU/TamuUndanganwithCode',
-      ),
-    );
-
-    if (response.statusCode == 200) {
-      final List<dynamic> data = jsonDecode(response.body);
-      final List<Map<String, dynamic>> sheetDataTamu =
-          data.cast<Map<String, dynamic>>();
-
-      final foundGuest = sheetDataTamu.firstWhere(
-        (item) => item['Kode Undangan'].toString() == widget.guestName,
-        orElse: () => {},
+    try {
+      final response = await http.get(
+        Uri.parse(
+          'https://opensheet.elk.sh/1IFycFK3i-AzaZepz0C03dpkoMxemwrBQ45WjwKYVmEU/TamuUndanganwithCode',
+        ),
       );
 
-      setState(() {
-        guestCode = foundGuest.isNotEmpty ? foundGuest['Kode Undangan'] : '';
-        guestNameAfterDecode = foundGuest.isNotEmpty
-            ? '${foundGuest['Title']} ${foundGuest['Nama Undangan']}'
-            : '';
-        isLoading = false;
-      });
-    } else {
-      setState(() {
-        guestNameAfterDecode = '';
-        isLoading = false;
-      });
+      if (response.statusCode == 200) {
+        final List<dynamic> data = jsonDecode(response.body);
+        final List<Map<String, dynamic>> sheetDataTamu =
+            data.cast<Map<String, dynamic>>();
+
+        final foundGuest = sheetDataTamu.firstWhere(
+          (item) => item['Kode Undangan'].toString() == widget.guestName,
+          orElse: () => {},
+        );
+
+        if (foundGuest.isEmpty) {
+          if (mounted) {
+            // Gunakan go_router redirect
+            GoRouter.of(context).go('/');
+          }
+          return;
+        }
+
+        if (mounted) {
+          setState(() {
+            guestCode = foundGuest['Kode Undangan'];
+            guestNameAfterDecode =
+                '${foundGuest['Title']} ${foundGuest['Nama Undangan']}';
+            isLoading = false;
+          });
+        }
+      } else {
+        // Gagal fetch data
+        if (mounted) {
+          setState(() {
+            guestNameAfterDecode = '';
+            isLoading = false;
+          });
+        }
+      }
+    } catch (e) {
+      print('Error: $e');
+      if (mounted) {
+        setState(() {
+          guestNameAfterDecode = '';
+          isLoading = false;
+        });
+      }
     }
   }
 
