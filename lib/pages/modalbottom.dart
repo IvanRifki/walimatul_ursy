@@ -24,8 +24,8 @@ Future<void> _openMaps() async {
   }
 }
 
-void showTabModal(
-    BuildContext context, String guestName, String guestCode) async {
+void showTabModal(BuildContext context, String guestName, String guestCode,
+    int tabInitial) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.clear();
   Statusnya.clear();
@@ -45,6 +45,7 @@ void showTabModal(
     ),
     builder: (context) {
       return DefaultTabController(
+        initialIndex: tabInitial,
         length: 4,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -209,131 +210,193 @@ void showTabModal(
 
                   //Kupon Souvenir
                   Center(
-                      child: GestureDetector(
-                    onTap: () {
-                      // _openMaps();
-                    },
-                    child: Tilt(
-                        shadowConfig: const ShadowConfig(disable: true),
-                        childLayout: ChildLayout(behind: [
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SizedBox(height: 20),
-                                FadeInUp(
-                                  child: TiltParallax(
-                                    size: const Offset(15, 20),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 20.0, right: 20.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            height: 200,
-                                            child: PrettyQrView.data(
-                                              data: guestCode,
-                                              decoration:
-                                                  const PrettyQrDecoration(
-                                                quietZone:
-                                                    PrettyQrQuietZone.zero,
-                                              ),
+                    child: GestureDetector(
+                      onTap: () {
+                        // _openMaps();
+                        // wkwkwk
+                        prefs.clear();
+                        SouvenirStatus = '';
+                        fetchSheetDataPlain(guestCode).then((value) {
+                          SouvenirStatus = value['Souvenir'];
+                          Navigator.pop(context);
+                          showTabModal(context, guestName, guestCode, 2);
+                        });
+                      },
+                      child: SingleChildScrollView(
+                        child: FadeInUp(
+                            child: SouvenirStatus.contains('Belum')
+                                ? Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        //card QR
+                                        Card(
+                                          color: Colors.white,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(20),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                // const SizedBox(height: 20),
+                                                TeksNamaPengantin(
+                                                    'Novia & Ivan', context),
+                                                // const SizedBox(height: 20),
+                                                Text(
+                                                  'Tukarkan barcode dengan souvenir yang tersedia.',
+                                                  softWrap: true,
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  maxLines: 2,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 12,
+                                                    color: Colors.brown[900],
+                                                    // fontWeight: FontWeight.bold
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                const SizedBox(height: 20),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.5,
+                                                  child: Tilt(
+                                                      shadowConfig:
+                                                          ShadowConfig(
+                                                              disable: true),
+                                                      childLayout:
+                                                          ChildLayout(outer: [
+                                                        TiltParallax(
+                                                          size: const Offset(
+                                                              15, 20),
+                                                          child:
+                                                              PrettyQrView.data(
+                                                            data: guestCode,
+                                                            decoration:
+                                                                const PrettyQrDecoration(
+                                                              quietZone:
+                                                                  PrettyQrQuietZone
+                                                                      .zero,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ]),
+                                                      child: TiltParallax(
+                                                        size: const Offset(
+                                                            15, 20),
+                                                        child:
+                                                            PrettyQrView.data(
+                                                          data: guestCode,
+                                                          decoration:
+                                                              const PrettyQrDecoration(
+                                                            quietZone:
+                                                                PrettyQrQuietZone
+                                                                    .zero,
+                                                          ),
+                                                        ),
+                                                      )),
+                                                ),
+                                                const SizedBox(height: 20),
+                                                TeksBiasaBold(
+                                                    guestCode, context),
+                                                TeksBiasa(guestName, context),
+                                                const SizedBox(height: 20),
+                                                DottedBorder(
+                                                  borderType: BorderType.RRect,
+                                                  radius:
+                                                      const Radius.circular(10),
+                                                  dashPattern: const [5, 5],
+                                                  color: Colors.brown[900]!,
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text('Souvenir: ',
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontSize: 12,
+                                                            color: Colors
+                                                                .brown[900],
+                                                          )),
+                                                      const Icon(
+                                                        Icons.info,
+                                                        color: Colors.brown,
+                                                        size: 16,
+                                                      ),
+                                                      const SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Text(SouvenirStatus,
+                                                          softWrap: true,
+                                                          overflow: TextOverflow
+                                                              .visible,
+                                                          maxLines: 2,
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontSize: 12,
+                                                            color: Colors
+                                                                .brown[900],
+                                                            // fontWeight: FontWeight.bold
+                                                          )),
+                                                    ],
+                                                  ),
+                                                ),
+                                                // const SizedBox(height: 20),
+                                              ],
                                             ),
                                           ),
-                                          SizedBox(height: 10),
-                                          Text(guestCode,
-                                              style: GoogleFonts.poppins(
-                                                fontSize: 15,
-                                                color: Colors.brown[900],
-                                                fontWeight: FontWeight.bold,
-                                              )),
-                                          SizedBox(height: 20),
-                                          TeksBiasa('Tamu undangan', context),
-                                          TeksBiasaBold(
-                                              '${guestName}', context),
-                                          SizedBox(height: 20),
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: SouvenirStatus.contains(
-                                                      'Belum')
-                                                  ? Colors.pink[50]
-                                                  : Colors.green[50],
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
+                                        ),
+
+                                        //card info pengambilan & ucapan terima kasih
+                                        Card(
+                                          color: Colors.amber[50],
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(0),
                                             child: DottedBorder(
-                                              color: SouvenirStatus.contains(
-                                                      'Belum')
-                                                  ? Colors.pink
-                                                  : Colors.green,
-                                              strokeWidth: 1,
                                               borderType: BorderType.RRect,
-                                              radius: Radius.circular(20),
-                                              dashPattern: [
-                                                6,
-                                                3
-                                              ], // 6px garis, 3px spasi
-                                              child: Container(
-                                                padding: EdgeInsets.all(10),
-                                                child: Column(
-                                                  children: [
-                                                    DottedBorder(
-                                                      color: SouvenirStatus
-                                                              .contains('Belum')
-                                                          ? Colors.pink
-                                                          : Colors.green,
-                                                      strokeWidth: 1,
-                                                      borderType:
-                                                          BorderType.RRect,
-                                                      radius:
-                                                          Radius.circular(10),
-                                                      dashPattern: [
-                                                        6,
-                                                        3
-                                                      ], // 6px garis, 3px spasi
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(10),
-                                                        ),
-                                                        padding:
-                                                            EdgeInsets.all(10),
-                                                        child:
-                                                            //Belum diambil
-                                                            Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            SouvenirStatus
-                                                                    .contains(
-                                                                        'Belum')
-                                                                ? Icon(
-                                                                    Icons.info,
-                                                                    color: Colors
-                                                                        .pink,
-                                                                  )
-                                                                : Icon(
-                                                                    Icons
-                                                                        .check_circle,
-                                                                    color: Colors
-                                                                        .green,
-                                                                  ),
-                                                            SizedBox(width: 5),
-                                                            Text(
-                                                              SouvenirStatus
-                                                                      .contains(
-                                                                          'Belum')
-                                                                  ? 'Souvenir belum diambil'
-                                                                  : 'Souvenir sudah diambil',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
+                                              radius: const Radius.circular(10),
+                                              dashPattern: const [10, 5],
+                                              color: Colors.amber,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.circle,
+                                                            size: 12,
+                                                            color: Colors.pink,
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 5),
+                                                          Expanded(
+                                                            // Tambahkan ini
+                                                            child: Text(
+                                                              'Tunjukan QR Code ini kepada petugas souvenir',
                                                               style: GoogleFonts
                                                                   .poppins(
                                                                 fontSize: 12,
@@ -343,154 +406,299 @@ void showTabModal(
                                                                     FontStyle
                                                                         .italic,
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(height: 10),
-                                                    SouvenirStatus.contains(
-                                                            'Sudah')
-                                                        ? Column(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .center,
-                                                            children: [
-                                                                Text(
-                                                                  'Dengan tulus, kami mengucapkan terima kasih atas kehadiran Anda, ini sangat berarti dan membuat kami semakin bahagia.',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: GoogleFonts
-                                                                      .poppins(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                            .brown[
-                                                                        900],
-                                                                    fontStyle:
-                                                                        FontStyle
-                                                                            .normal,
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                    height: 10),
-                                                                Text(
-                                                                  'Semoga kebahagiaan selalu menyertai kita semua.',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: GoogleFonts
-                                                                      .poppins(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                            .brown[
-                                                                        900],
-                                                                    fontStyle:
-                                                                        FontStyle
-                                                                            .normal,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  'Aamiin Allahumma Aamiin ❤︎',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: GoogleFonts
-                                                                      .poppins(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                            .brown[
-                                                                        900],
-                                                                    fontStyle:
-                                                                        FontStyle
-                                                                            .normal,
-                                                                  ),
-                                                                ),
-                                                                SizedBox(
-                                                                    height: 20),
-                                                                Text(
-                                                                  'Kami yang berbahagia:',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style: GoogleFonts
-                                                                      .poppins(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                            .brown[
-                                                                        900],
-                                                                    fontStyle:
-                                                                        FontStyle
-                                                                            .normal,
-                                                                  ),
-                                                                ),
-                                                                Text(
-                                                                  'Novia & Ivan',
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .center,
-                                                                  style:
-                                                                      GoogleFonts
-                                                                          .msMadi(
-                                                                    fontSize:
-                                                                        40,
-                                                                    color: Colors
-                                                                            .brown[
-                                                                        900],
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontStyle:
-                                                                        FontStyle
-                                                                            .normal,
-                                                                  ),
-                                                                ),
-                                                              ])
-                                                        : Text(
-                                                            'Tukarkan kode barcode ini dengan souvenir yg tersedia.',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: GoogleFonts
-                                                                .poppins(
-                                                              fontSize: 12,
-                                                              color: Colors
-                                                                  .brown[900],
-                                                              fontStyle:
-                                                                  FontStyle
-                                                                      .italic,
+                                                              softWrap: true,
                                                             ),
                                                           ),
-                                                    Text(
-                                                      '1 Souvenir untuk 1 tamu undangan.',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          GoogleFonts.poppins(
-                                                        fontSize: 12,
-                                                        color:
-                                                            Colors.brown[900],
-                                                        fontStyle:
-                                                            FontStyle.italic,
+                                                        ],
                                                       ),
-                                                    ),
-                                                  ],
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.circle,
+                                                            size: 12,
+                                                            color: Colors.pink,
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 5),
+                                                          Expanded(
+                                                            child: Text(
+                                                              '1 (satu) Souvenir untuk 1 (satu) tamu undangan',
+                                                              style: GoogleFonts.poppins(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                          .brown[
+                                                                      900],
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .italic
+                                                                  // fontWeight: FontWeight.bold
+                                                                  ),
+                                                              softWrap: true,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-                                ),
-                              ]),
-                        ]),
-                        child: Container()),
-                  )),
+                                  )
+                                : Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        //card QR
+                                        Card(
+                                          color: Colors.white,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(20),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                // const SizedBox(height: 20),
+                                                TeksNamaPengantin(
+                                                    'Novia & Ivan', context),
+                                                // const SizedBox(height: 20),
+                                                Text(
+                                                  'Terima Kasih Atas Kehadirannya.',
+                                                  softWrap: true,
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  maxLines: 2,
+                                                  style: GoogleFonts.poppins(
+                                                    fontSize: 12,
+                                                    color: Colors.brown[900],
+                                                    // fontWeight: FontWeight.bold
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                                const SizedBox(height: 20),
+                                                SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      0.5,
+                                                  child: Tilt(
+                                                      shadowConfig:
+                                                          ShadowConfig(
+                                                              disable: true),
+                                                      childLayout:
+                                                          ChildLayout(outer: [
+                                                        TiltParallax(
+                                                          size: const Offset(
+                                                              15, 20),
+                                                          child:
+                                                              PrettyQrView.data(
+                                                            data: guestCode,
+                                                            decoration:
+                                                                const PrettyQrDecoration(
+                                                              quietZone:
+                                                                  PrettyQrQuietZone
+                                                                      .zero,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      ]),
+                                                      child: TiltParallax(
+                                                        size: const Offset(
+                                                            15, 20),
+                                                        child:
+                                                            PrettyQrView.data(
+                                                          data: guestCode,
+                                                          decoration:
+                                                              const PrettyQrDecoration(
+                                                            quietZone:
+                                                                PrettyQrQuietZone
+                                                                    .zero,
+                                                          ),
+                                                        ),
+                                                      )),
+                                                ),
+                                                const SizedBox(height: 20),
+                                                TeksBiasaBold(
+                                                    guestCode, context),
+                                                TeksBiasa(guestName, context),
+                                                const SizedBox(height: 20),
+                                                DottedBorder(
+                                                  borderType: BorderType.RRect,
+                                                  radius:
+                                                      const Radius.circular(10),
+                                                  dashPattern: const [5, 5],
+                                                  color:
+                                                      SouvenirStatus.contains(
+                                                              'Sudah')
+                                                          ? Colors.green
+                                                          : Colors.brown,
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text('Souvenir : ',
+                                                          softWrap: true,
+                                                          overflow: TextOverflow
+                                                              .visible,
+                                                          maxLines: 2,
+                                                          style: GoogleFonts
+                                                              .poppins(
+                                                            fontSize: 12,
+                                                            // color: Colors.brown,
+                                                          )),
+                                                      SouvenirStatus.contains(
+                                                              'Sudah')
+                                                          ? const Icon(
+                                                              Icons
+                                                                  .check_circle,
+                                                              color:
+                                                                  Colors.green,
+                                                              size: 16,
+                                                            )
+                                                          : const Icon(
+                                                              Icons.info,
+                                                              color:
+                                                                  Colors.brown,
+                                                              size: 16,
+                                                            ),
+                                                      const SizedBox(
+                                                        width: 5,
+                                                      ),
+                                                      Text(SouvenirStatus,
+                                                          softWrap: true,
+                                                          overflow: TextOverflow
+                                                              .visible,
+                                                          maxLines: 2,
+                                                          style: GoogleFonts.poppins(
+                                                              fontSize: 12,
+                                                              color: SouvenirStatus
+                                                                      .contains(
+                                                                          'Sudah')
+                                                                  ? Colors.green
+                                                                  : Colors
+                                                                      .brown,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold)),
+                                                    ],
+                                                  ),
+                                                ),
+                                                // const SizedBox(height: 20),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+
+                                        //card info pengambilan & ucapan terima kasih
+                                        Card(
+                                          color: Colors.white,
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(0),
+                                            child: DottedBorder(
+                                              borderType: BorderType.RRect,
+                                              radius: const Radius.circular(10),
+                                              dashPattern: const [10, 5],
+                                              color: Colors.pink,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: SizedBox(
+                                                  width: MediaQuery.of(context)
+                                                      .size
+                                                      .width,
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.circle,
+                                                            size: 10,
+                                                            color: Colors.pink,
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 5),
+                                                          Expanded(
+                                                            // Tambahkan ini
+                                                            child: Text(
+                                                              'Tunjukan QR Code ini kepada petugas souvenir',
+                                                              style: GoogleFonts
+                                                                  .poppins(
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .brown[900],
+                                                                fontStyle:
+                                                                    FontStyle
+                                                                        .italic,
+                                                              ),
+                                                              softWrap: true,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                      Row(
+                                                        children: [
+                                                          const Icon(
+                                                            Icons.circle,
+                                                            size: 10,
+                                                            color: Colors.pink,
+                                                          ),
+                                                          const SizedBox(
+                                                              width: 5),
+                                                          Expanded(
+                                                            child: Text(
+                                                              '1 (satu) Souvenir untuk 1 (satu) tamu undangan',
+                                                              style: GoogleFonts.poppins(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                          .brown[
+                                                                      900],
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .italic
+                                                                  // fontWeight: FontWeight.bold
+                                                                  ),
+                                                              softWrap: true,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )),
+                      ),
+                    ),
+                  ),
 
                   //Lainnya
                   Padding(
@@ -646,7 +854,7 @@ void showTabModal(
                     ],
                   ),
                 )),
-            SizedBox(height: 50),
+            SizedBox(height: 20),
           ],
         ),
       );

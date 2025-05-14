@@ -323,7 +323,7 @@ class _InvitationPageState extends State<InvitationPage> {
                   color: Colors.pink,
                 ),
                 onPressed: () async {
-                  showTabModal(context, guestNameAfterDecode, guestCode);
+                  showTabModal(context, guestNameAfterDecode, guestCode, 0);
                 },
               ),
             ],
