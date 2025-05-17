@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,6 +12,7 @@ import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
 import 'package:walimatul_ursy/pages/modalbottom.dart';
 import 'package:walimatul_ursy/pages/static.dart';
+import 'package:knight_confetti/knight_confetti.dart';
 
 void main() {
   final uri = Uri.base;
@@ -288,6 +290,11 @@ class _InvitationPageState extends State<InvitationPage> {
             fit: BoxFit.cover,
           ),
         ),
+        SnowConfetti(
+          totalParticles: 100, // Total number of particles
+          // color: Colors.white.withOpacity(0.9),
+          color: Colors.amber[100]!.withOpacity(0.9),
+        ),
 
         //konten utama
         Scaffold(
@@ -339,148 +346,356 @@ class _InvitationPageState extends State<InvitationPage> {
               : SingleChildScrollView(
                   // child: deviceType == "HP"
                   child: deviceType != ""
-                      ? Padding(
-                          padding: const EdgeInsets.all(0.0),
-                          child: //Teks ulang start
-                              Tilt(
-                            shadowConfig: const ShadowConfig(disable: true),
-                            childLayout: ChildLayout(behind: [
-                              Column(
-                                children: [
-                                  //Bismillah
-                                  FadeInDown(
-                                    child: TiltParallax(
-                                      size: const Offset(15, 15),
-                                      child: Image.asset(
-                                        scale:
-                                            MediaQuery.of(context).size.width *
-                                                0.016,
-                                        'assets/weddingassets/bismillah.png',
-                                        fit: BoxFit.cover,
+                      ?
+                      //Teks ulang start
+                      Column(
+                          // mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Tilt(
+                              shadowConfig: const ShadowConfig(disable: true),
+                              childLayout: ChildLayout(
+                                  outer: [
+                                    //flower_topright
+                                    Positioned(
+                                      top: -140,
+                                      right: 80,
+                                      child: FadeInDown(
+                                        child: TiltParallax(
+                                          size: Offset(5, 20),
+                                          child: Transform.rotate(
+                                            angle: pi / 2,
+                                            child: Transform.flip(
+                                              flipY: true,
+                                              child: Image.asset(
+                                                scale: lebarLayar / 150,
+                                                'assets/weddingassets/flower_bottomleft.png',
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-
-                                  SizedBox(height: tinggiLayar * 0.01),
-
-                                  //Dengan memohon
-                                  FadeInDown(
-                                    child: TiltParallax(
-                                        size: const Offset(15, 20),
-                                        child: TeksBiasa(
-                                            'Dengan memohon rahmat dan ridho',
-                                            context)),
-                                  ),
-
-                                  //Allah Azza Wa Jalla
-                                  FadeInDown(
-                                    child: TiltParallax(
-                                        size: const Offset(15, 20),
-                                        child: TeksBiasa(
-                                            'Allah Azza Wa Jalla', context)),
-                                  ),
-
-                                  SizedBox(height: tinggiLayar * 0.01),
-
-                                  FadeInDown(
-                                    child: TiltParallax(
-                                        size: const Offset(15, 20),
-                                        child: TeksBiasa(
-                                            'kami mengundang Bapak/Ibu/Saudara/i sekalian',
-                                            context)),
-                                  ),
-                                  FadeInDown(
-                                    child: TiltParallax(
-                                        size: const Offset(15, 20),
-                                        child: TeksBiasa(
-                                            'untuk menghadiri acara walimatul urs:',
-                                            context)),
-                                  ),
-                                  SizedBox(height: tinggiLayar * 0.01),
-
-                                  //Pengantin Wanita
-                                  FadeInLeft(
-                                    child: TiltParallax(
-                                      size: const Offset(20, 30),
-                                      child: TeksNamaPengantin(
-                                          'Novia Andhara', context),
+                                    //flower_bottomleft
+                                    Positioned(
+                                      bottom: -150,
+                                      left: 100,
+                                      child: FadeInDown(
+                                        child: TiltParallax(
+                                          size: Offset(5, 20),
+                                          child: Transform.rotate(
+                                            angle: pi / 2,
+                                            child: Transform.flip(
+                                              flipY: true,
+                                              child: Image.asset(
+                                                scale: lebarLayar / 150,
+                                                'assets/weddingassets/flower_topright.png',
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  FadeInLeft(
-                                    child: TiltParallax(
-                                      size: const Offset(15, 20),
-                                      child: TeksBiasa(
-                                          'Putri pertama dari', context),
-                                    ),
-                                  ),
-                                  FadeInLeft(
-                                    child: TiltParallax(
-                                      size: const Offset(15, 20),
-                                      child: TeksBiasaBold(
-                                          'Bpk. Agus Suwarno & Ibu Sarmanah',
-                                          context),
-                                    ),
-                                  ),
-                                  SizedBox(height: tinggiLayar * 0.02),
-                                  FadeIn(
-                                    child: TiltParallax(
-                                      size: const Offset(20, 20),
-                                      child: TeksNamaPengantin('&', context),
-                                    ),
-                                  ),
+                                  ],
 
-                                  //Pengantin Pria
-                                  FadeInRight(
-                                    child: TiltParallax(
-                                      size: const Offset(20, 30),
-                                      child: TeksNamaPengantin(
-                                          'Ivan Rifki Nur Alif', context),
+                                  //Ornament Start
+
+                                  behind: [
+                                    //outline_leaf_gold topright
+                                    Positioned(
+                                      top: 50,
+                                      right: -120,
+                                      child: FadeInDown(
+                                        child: TiltParallax(
+                                          size: Offset(20, 20),
+                                          child: Transform.rotate(
+                                            angle: pi / 2,
+                                            child: Transform.flip(
+                                              flipY: true,
+                                              child: Image.asset(
+                                                scale: lebarLayar / 150,
+                                                'assets/weddingassets/outline_leaf_gold.png',
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  FadeInRight(
-                                    child: TiltParallax(
-                                      size: const Offset(15, 20),
-                                      child: TeksBiasa(
-                                          'Putra pertama dari', context),
+
+                                    //splash_gold_topright
+                                    Positioned(
+                                      top: 25,
+                                      right: -50,
+                                      child: FadeInDown(
+                                        child: TiltParallax(
+                                          size: Offset(10, 10),
+                                          child: Transform.flip(
+                                            flipX: true,
+                                            child: Image.asset(
+                                              scale: lebarLayar / 200,
+                                              'assets/weddingassets/splash_gold_topleft.png',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  FadeInRight(
-                                    child: TiltParallax(
-                                      size: const Offset(15, 20),
-                                      child: TeksBiasaBold(
-                                          'Bpk. Nurdin Maryanto (Rahimahullah) & Ibu Suwarti',
-                                          context),
+
+                                    //outline_leaf_gold Bottom Left
+                                    Positioned(
+                                      bottom: 50,
+                                      left: -120,
+                                      child: FadeInDown(
+                                        child: TiltParallax(
+                                          size: Offset(5, 20),
+                                          child: Transform.rotate(
+                                            angle: pi / 2,
+                                            child: Transform.flip(
+                                              flipX: true,
+                                              child: Image.asset(
+                                                scale: lebarLayar / 150,
+                                                'assets/weddingassets/outline_leaf_gold.png',
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(height: tinggiLayar * 0.03),
-                                  FadeInRight(
-                                    child: TiltParallax(
-                                        size: const Offset(15, 20),
-                                        child: Text(
-                                            'Info lebih lanjut ketuk tombol ❤︎ ya..',
-                                            style: GoogleFonts.poppins(
-                                              textStyle: const TextStyle(
-                                                  fontStyle: FontStyle.italic),
-                                              fontSize: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.03,
-                                              color: Colors.brown[900],
-                                            ))),
-                                  ),
-                                  SizedBox(height: tinggiLayar * 0.1),
-                                ],
+
+                                    //splash_gold_topleft
+                                    Positioned(
+                                      top: -10,
+                                      left: -50,
+                                      child: FadeInDown(
+                                        child: TiltParallax(
+                                          size: Offset(30, 10),
+                                          child: Image.asset(
+                                            scale: 2,
+                                            'assets/weddingassets/splash_gold_topleft.png',
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
+                                    //splash_gold_bottomleft
+                                    Positioned(
+                                      bottom: -10,
+                                      left: -20,
+                                      child: FadeInDown(
+                                        child: TiltParallax(
+                                          size: Offset(10, 10),
+                                          child: Image.asset(
+                                            scale: lebarLayar / 200,
+                                            'assets/weddingassets/splash_gold_bottomleft.png',
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    //splash_gold_bottomleft
+                                    Positioned(
+                                      bottom: -20,
+                                      right: -60,
+                                      child: FadeInDown(
+                                        child: TiltParallax(
+                                          size: Offset(30, 10),
+                                          child: Transform.flip(
+                                            flipX: true,
+                                            child: Image.asset(
+                                              scale: lebarLayar / 200,
+                                              'assets/weddingassets/splash_gold_topleft.png',
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                  //Ornament End
+                                  inner: [
+                                    Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(0.0),
+                                        child: Stack(children: [
+                                          Column(
+                                            children: [
+                                              //Ornament
+                                              // Stack(children: [
+                                              // Positioned(
+                                              //   bottom: 0,
+                                              //   left: -7,
+                                              //   child: FadeInDown(
+                                              //     child: Image.asset(
+                                              //       scale: 3,
+                                              //       'assets/weddingassets/outline_leaf_gold.png',
+                                              //       fit: BoxFit.cover,
+                                              //     ),
+                                              //   ),
+                                              // ),
+                                              // ]),
+
+                                              //Bismillah
+                                              FadeInDown(
+                                                child: TiltParallax(
+                                                  size: const Offset(15, 15),
+                                                  child: Image.asset(
+                                                    scale:
+                                                        MediaQuery.of(context)
+                                                                .size
+                                                                .width *
+                                                            0.016,
+                                                    'assets/weddingassets/bismillah.png',
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+
+                                              SizedBox(
+                                                  height: tinggiLayar * 0.01),
+
+                                              //Dengan memohon
+                                              FadeInDown(
+                                                child: TiltParallax(
+                                                    size: const Offset(15, 20),
+                                                    child: TeksBiasa(
+                                                        'Dengan memohon rahmat dan ridho',
+                                                        context)),
+                                              ),
+
+                                              //Allah Azza Wa Jalla
+                                              FadeInDown(
+                                                child: TiltParallax(
+                                                    size: const Offset(15, 20),
+                                                    child: TeksBiasa(
+                                                        'Allah Azza Wa Jalla',
+                                                        context)),
+                                              ),
+
+                                              SizedBox(
+                                                  height: tinggiLayar * 0.01),
+
+                                              FadeInDown(
+                                                child: TiltParallax(
+                                                    size: const Offset(15, 20),
+                                                    child: TeksBiasa(
+                                                        'kami mengundang Bapak/Ibu/Saudara/i sekalian',
+                                                        context)),
+                                              ),
+                                              FadeInDown(
+                                                child: TiltParallax(
+                                                    size: const Offset(15, 20),
+                                                    child: TeksBiasa(
+                                                        'untuk menghadiri acara walimatul urs:',
+                                                        context)),
+                                              ),
+                                              SizedBox(
+                                                  height: tinggiLayar * 0.01),
+
+                                              //Pengantin Wanita
+                                              FadeInLeft(
+                                                child: TiltParallax(
+                                                  size: const Offset(20, 30),
+                                                  child: TeksNamaPengantin(
+                                                      'Novia Andhara', context),
+                                                ),
+                                              ),
+                                              FadeInLeft(
+                                                child: TiltParallax(
+                                                  size: const Offset(15, 20),
+                                                  child: TeksBiasa(
+                                                      'Putri pertama dari',
+                                                      context),
+                                                ),
+                                              ),
+                                              FadeInLeft(
+                                                child: TiltParallax(
+                                                  size: const Offset(15, 20),
+                                                  child: TeksBiasaBold(
+                                                      'Bpk. Agus Suwarno & Ibu Sarmanah',
+                                                      context),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  height: tinggiLayar * 0.02),
+                                              FadeIn(
+                                                child: TiltParallax(
+                                                  size: const Offset(20, 20),
+                                                  child: TeksNamaPengantin(
+                                                      '&', context),
+                                                ),
+                                              ),
+
+                                              //Pengantin Pria
+                                              FadeInRight(
+                                                child: TiltParallax(
+                                                  size: const Offset(20, 30),
+                                                  child: TeksNamaPengantin(
+                                                      'Ivan Rifki Nur Alif',
+                                                      context),
+                                                ),
+                                              ),
+                                              FadeInRight(
+                                                child: TiltParallax(
+                                                  size: const Offset(15, 20),
+                                                  child: TeksBiasa(
+                                                      'Putra pertama dari',
+                                                      context),
+                                                ),
+                                              ),
+                                              FadeInRight(
+                                                child: TiltParallax(
+                                                  size: const Offset(15, 20),
+                                                  child: TeksBiasaBold(
+                                                      'Bpk. Nurdin Maryanto (Rahimahullah) & Ibu Suwarti',
+                                                      context),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                  height: tinggiLayar * 0.03),
+                                              FadeInRight(
+                                                child: TiltParallax(
+                                                    size: const Offset(15, 20),
+                                                    child: Text(
+                                                        'Info lebih lanjut ketuk tombol ❤︎ ya..',
+                                                        style:
+                                                            GoogleFonts.poppins(
+                                                          textStyle:
+                                                              const TextStyle(
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .italic),
+                                                          fontSize: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.03,
+                                                          color:
+                                                              Colors.brown[900],
+                                                        ))),
+                                              ),
+                                              SizedBox(
+                                                  height: tinggiLayar * 0.1),
+                                            ],
+                                          ),
+                                        ]),
+                                      ),
+                                    ),
+                                  ]),
+                              child: Container(
+                                width: lebarLayar.toDouble(),
+                                height: tinggiLayar.toDouble(),
                               ),
-                            ]),
-                            child: Container(
-                              width: lebarLayar.toDouble(),
-                              height: tinggiLayar.toDouble(),
+                              //
                             ),
-                            //
-                          ),
-
-                          //Teks ulang end
+                          ],
                         )
+
+                      //Teks ulang end
                       : Center(
                           child: Text('Masih kosong ya bang 👍',
                               style: GoogleFonts.msMadi(

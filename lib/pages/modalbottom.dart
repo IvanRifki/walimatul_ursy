@@ -41,7 +41,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode,
     barrierColor:
         Colors.black.withOpacity(0.3), // Latar belakang gelap transparan
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(0)),
     ),
     builder: (context) {
       return DefaultTabController(

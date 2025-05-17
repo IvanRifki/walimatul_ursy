@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:mobile_scanner/mobile_scanner.dart';
 
 void main() {
   runApp(const MaterialApp(
@@ -157,6 +158,32 @@ class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
     }
   }
 
+  Barcode? _barcode;
+
+  Widget _barcodePreview(Barcode? value) {
+    if (value == null) {
+      return const Text(
+        'Scan something!',
+        overflow: TextOverflow.fade,
+        style: TextStyle(color: Colors.white),
+      );
+    }
+
+    return Text(
+      value.displayValue ?? 'No display value.',
+      overflow: TextOverflow.fade,
+      style: const TextStyle(color: Colors.white),
+    );
+  }
+
+  void _handleBarcode(BarcodeCapture barcodes) {
+    if (mounted) {
+      setState(() {
+        _barcode = barcodes.barcodes.firstOrNull;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,6 +192,7 @@ class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            MobileScanner(onDetect: _handleBarcode),
             TextField(
               controller: _kodeController,
               decoration: InputDecoration(
