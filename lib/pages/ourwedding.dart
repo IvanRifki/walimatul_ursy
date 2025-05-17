@@ -52,56 +52,15 @@ class InvitationPage extends StatefulWidget {
   State<InvitationPage> createState() => _InvitationPageState();
 }
 
-class _InvitationPageState extends State<InvitationPage> {
+class _InvitationPageState extends State<InvitationPage>
+    with TickerProviderStateMixin {
   String guestNameAfterDecode = '';
   String guestCode = '';
   bool isLoading = true;
 
   final AudioPlayer _audioPlayer = AudioPlayer();
   bool isPlaying = false;
-
-  // Future<void> fetchSheetData() async {
-  //   final response = await http.get(
-  //     Uri.parse(
-  //       'https://opensheet.elk.sh/1IFycFK3i-AzaZepz0C03dpkoMxemwrBQ45WjwKYVmEU/TamuUndanganwithCode',
-  //     ),
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     final List<dynamic> data = jsonDecode(response.body);
-  //     final List<Map<String, dynamic>> sheetDataTamu =
-  //         data.cast<Map<String, dynamic>>();
-
-  //     final foundGuest = sheetDataTamu.firstWhere(
-  //       (item) => item['Kode Undangan'].toString() == widget.guestName,
-  //       orElse: () => {},
-  //     );
-
-  //     if (foundGuest.isEmpty) {
-  //       // Redirect ke halaman lain kalau tidak ditemukan
-  //       if (mounted) {
-  //         Navigator.pushReplacement(
-  //           context,
-  //           MaterialPageRoute(
-  //               builder: (_) => BelumDiundangPage()), // ganti sesuai halamanmu
-  //         );
-  //       }
-  //       return;
-  //     }
-
-  //     setState(() {
-  //       guestCode = foundGuest['Kode Undangan'];
-  //       guestNameAfterDecode =
-  //           '${foundGuest['Title']} ${foundGuest['Nama Undangan']}';
-  //       isLoading = false;
-  //     });
-  //   } else {
-  //     setState(() {
-  //       guestNameAfterDecode = '';
-  //       isLoading = false;
-  //     });
-  //   }
-  // }
+  late AnimationController _controller;
 
   String souvenirStatus = 'Belum diambil';
 
@@ -163,63 +122,13 @@ class _InvitationPageState extends State<InvitationPage> {
     }
   }
 
-  // Future<void> fetchSheetData() async {
-  //   try {
-  //     final response = await http.get(
-  //       Uri.parse(
-  //         'https://opensheet.elk.sh/1IFycFK3i-AzaZepz0C03dpkoMxemwrBQ45WjwKYVmEU/TamuUndanganwithCode',
-  //       ),
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       final List<dynamic> data = jsonDecode(response.body);
-  //       final List<Map<String, dynamic>> sheetDataTamu =
-  //           data.cast<Map<String, dynamic>>();
-
-  //       final foundGuest = sheetDataTamu.firstWhere(
-  //         (item) => item['Kode Undangan'].toString() == widget.guestName,
-  //         orElse: () => {},
-  //       );
-
-  //       if (foundGuest.isEmpty) {
-  //         if (mounted) {
-  //           // Gunakan go_router redirect
-  //           GoRouter.of(context).go('/');
-  //         }
-  //         return;
-  //       }
-
-  //       if (mounted) {
-  //         setState(() {
-  //           guestCode = foundGuest['Kode Undangan'];
-  //           guestNameAfterDecode =
-  //               '${foundGuest['Title']} ${foundGuest['Nama Undangan']}';
-  //           isLoading = false;
-  //         });
-  //       }
-  //     } else {
-  //       // Gagal fetch data
-  //       if (mounted) {
-  //         setState(() {
-  //           guestNameAfterDecode = '';
-  //           isLoading = false;
-  //         });
-  //       }
-  //     }
-  //   } catch (e) {
-  //     print('Error: $e');
-  //     if (mounted) {
-  //       setState(() {
-  //         guestNameAfterDecode = '';
-  //         isLoading = false;
-  //       });
-  //     }
-  //   }
-  // }
-
   @override
   void initState() {
     super.initState();
+    _controller = AnimationController(
+      duration: const Duration(seconds: 2),
+      vsync: this,
+    );
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.white, // <-- warna status bar
       statusBarIconBrightness:
@@ -231,8 +140,10 @@ class _InvitationPageState extends State<InvitationPage> {
 
   void toggleAudio() async {
     if (isPlaying) {
+      _controller.stop();
       await _audioPlayer.stop();
     } else {
+      _controller.repeat();
       await _audioPlayer.play(AssetSource('weddingassets/kekal.mp3'));
     }
     setState(() {
@@ -242,6 +153,7 @@ class _InvitationPageState extends State<InvitationPage> {
 
   @override
   void dispose() {
+    _controller.dispose();
     _audioPlayer.dispose();
     super.dispose();
   }
@@ -298,42 +210,75 @@ class _InvitationPageState extends State<InvitationPage> {
 
         //konten utama
         Scaffold(
-          floatingActionButton: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              //Audio button
-              FloatingActionButton(
-                backgroundColor: Colors.white70,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.0),
+          floatingActionButton: Padding(
+            padding: EdgeInsets.only(bottom: lebarLayar < 350 ? 0 : 50),
+            // 30
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //Audio button
+                FloatingActionButton(
+                  backgroundColor: Colors.white70,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100.0),
+                  ),
+                  child: AnimatedBuilder(
+                    animation: _controller,
+                    builder: (_, child) {
+                      return Transform.rotate(
+                          angle: isPlaying ? _controller.value * 2 * pi : 0,
+                          child: child);
+                    },
+                    child: Icon(
+                      isPlaying ? Icons.stop : Icons.play_arrow,
+                      color: Colors.pink,
+                    ),
+                  ),
+                  // Icon(
+                  //   isPlaying ? Icons.stop : Icons.play_arrow,
+                  //   color: Colors.pink,
+                  // ),
+                  onPressed: () {
+                    // showTabModal(context, guestNameAfterDecode, guestCode);
+                    toggleAudio();
+                  },
                 ),
-                child: Icon(
-                  isPlaying ? Icons.stop : Icons.play_arrow,
-                  color: Colors.pink,
-                ),
-                onPressed: () {
-                  // showTabModal(context, guestNameAfterDecode, guestCode);
-                  toggleAudio();
-                },
-              ),
+                const SizedBox(width: 40),
+                // //Audio button
+                // FloatingActionButton(
+                //   backgroundColor: Colors.white70,
+                //   elevation: 0,
+                //   shape: RoundedRectangleBorder(
+                //     borderRadius: BorderRadius.circular(100.0),
+                //   ),
+                //   child: Icon(
+                //     isPlaying ? Icons.stop : Icons.play_arrow,
+                //     color: Colors.pink,
+                //   ),
+                //   onPressed: () {
+                //     // showTabModal(context, guestNameAfterDecode, guestCode);
+                //     toggleAudio();
+                //   },
+                // ),
 
-              //Love button
-              FloatingActionButton(
-                backgroundColor: Colors.white70,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100.0),
+                //Love button
+                FloatingActionButton(
+                  backgroundColor: Colors.white70,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100.0),
+                  ),
+                  child: const Icon(
+                    Icons.favorite,
+                    color: Colors.pink,
+                  ),
+                  onPressed: () async {
+                    showTabModal(context, guestNameAfterDecode, guestCode, 0);
+                  },
                 ),
-                child: const Icon(
-                  Icons.favorite,
-                  color: Colors.pink,
-                ),
-                onPressed: () async {
-                  showTabModal(context, guestNameAfterDecode, guestCode, 0);
-                },
-              ),
-            ],
+              ],
+            ),
           ),
           floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
           floatingActionButtonLocation:
@@ -358,8 +303,10 @@ class _InvitationPageState extends State<InvitationPage> {
                                   outer: [
                                     //flower_topright
                                     Positioned(
-                                      top: -140,
-                                      right: 80,
+                                      top: lebarLayar < 350 ? -60 : -130,
+                                      right: lebarLayar < 350 ? 40 : 80,
+                                      // right: 80,
+                                      // top: -140,
                                       child: FadeInDown(
                                         child: TiltParallax(
                                           size: Offset(5, 20),
@@ -368,7 +315,16 @@ class _InvitationPageState extends State<InvitationPage> {
                                             child: Transform.flip(
                                               flipY: true,
                                               child: Image.asset(
-                                                scale: lebarLayar / 150,
+                                                scale: lebarLayar /
+                                                    (lebarLayar < 350
+                                                        ? 50
+                                                        : lebarLayar < 414
+                                                            ? 110
+                                                            : 150),
+                                                // (lebarLayar < 414
+                                                //     ? 110
+                                                //     : 150),
+                                                // scale: lebarLayar / 150,
                                                 'assets/weddingassets/flower_bottomleft.png',
                                                 fit: BoxFit.cover,
                                               ),
@@ -379,17 +335,32 @@ class _InvitationPageState extends State<InvitationPage> {
                                     ),
                                     //flower_bottomleft
                                     Positioned(
-                                      bottom: -150,
-                                      left: 100,
+                                      bottom: lebarLayar < 350
+                                          ? -60
+                                          : lebarLayar < 414
+                                              ? -120
+                                              : -150,
+                                      left: lebarLayar < 350
+                                          ? 40
+                                          : lebarLayar < 414
+                                              ? 80
+                                              : 100,
+                                      // bottom: lebarLayar < 414 ? -120 : -150,
+                                      // left: lebarLayar < 414 ? 80 : 100,
                                       child: FadeInDown(
                                         child: TiltParallax(
-                                          size: Offset(5, 20),
+                                          size: const Offset(5, 20),
                                           child: Transform.rotate(
                                             angle: pi / 2,
                                             child: Transform.flip(
                                               flipY: true,
                                               child: Image.asset(
-                                                scale: lebarLayar / 150,
+                                                scale: lebarLayar /
+                                                    (lebarLayar < 350
+                                                        ? 50
+                                                        : lebarLayar < 414
+                                                            ? 110
+                                                            : 150),
                                                 'assets/weddingassets/flower_topright.png',
                                                 fit: BoxFit.cover,
                                               ),
@@ -405,8 +376,10 @@ class _InvitationPageState extends State<InvitationPage> {
                                   behind: [
                                     //outline_leaf_gold topright
                                     Positioned(
-                                      top: 50,
-                                      right: -120,
+                                      top: lebarLayar < 350 ? 40 : 50,
+                                      right: lebarLayar < 350 ? -100 : -120,
+                                      // top: 50,
+                                      // right: -120,
                                       child: FadeInDown(
                                         child: TiltParallax(
                                           size: Offset(20, 20),
@@ -415,7 +388,15 @@ class _InvitationPageState extends State<InvitationPage> {
                                             child: Transform.flip(
                                               flipY: true,
                                               child: Image.asset(
-                                                scale: lebarLayar / 150,
+                                                scale: lebarLayar /
+                                                    (lebarLayar < 350
+                                                        ? 90
+                                                        : lebarLayar < 414
+                                                            ? 130
+                                                            : 150),
+                                                // (lebarLayar < 414
+                                                //     ? 130
+                                                //     : 150),
                                                 'assets/weddingassets/outline_leaf_gold.png',
                                                 fit: BoxFit.cover,
                                               ),
@@ -427,15 +408,26 @@ class _InvitationPageState extends State<InvitationPage> {
 
                                     //splash_gold_topright
                                     Positioned(
-                                      top: 25,
-                                      right: -50,
+                                      top: lebarLayar < 350 ? 15 : 25,
+                                      right: lebarLayar < 350 ? -20 : -50,
+                                      // top: 25,
+                                      // right: -50,
                                       child: FadeInDown(
                                         child: TiltParallax(
                                           size: Offset(10, 10),
                                           child: Transform.flip(
                                             flipX: true,
                                             child: Image.asset(
-                                              scale: lebarLayar / 200,
+                                              scale: lebarLayar /
+                                                  (lebarLayar < 350
+                                                      ? 100
+                                                      : lebarLayar < 414
+                                                          ? 150
+                                                          : 200),
+                                              // (lebarLayar < 414
+                                              //     ? 150
+                                              //     : 200),
+
                                               'assets/weddingassets/splash_gold_topleft.png',
                                               fit: BoxFit.cover,
                                             ),
@@ -446,8 +438,10 @@ class _InvitationPageState extends State<InvitationPage> {
 
                                     //outline_leaf_gold Bottom Left
                                     Positioned(
-                                      bottom: 50,
-                                      left: -120,
+                                      bottom: lebarLayar < 350 ? 40 : 50,
+                                      left: lebarLayar < 350 ? -100 : -120,
+                                      // bottom: 50,
+                                      // left: -120,
                                       child: FadeInDown(
                                         child: TiltParallax(
                                           size: Offset(5, 20),
@@ -456,7 +450,15 @@ class _InvitationPageState extends State<InvitationPage> {
                                             child: Transform.flip(
                                               flipX: true,
                                               child: Image.asset(
-                                                scale: lebarLayar / 150,
+                                                scale: lebarLayar /
+                                                    (lebarLayar < 350
+                                                        ? 90
+                                                        : lebarLayar < 414
+                                                            ? 130
+                                                            : 150),
+                                                // (lebarLayar < 414
+                                                //     ? 130
+                                                //     : 150),
                                                 'assets/weddingassets/outline_leaf_gold.png',
                                                 fit: BoxFit.cover,
                                               ),
@@ -472,9 +474,15 @@ class _InvitationPageState extends State<InvitationPage> {
                                       left: -50,
                                       child: FadeInDown(
                                         child: TiltParallax(
-                                          size: Offset(30, 10),
+                                          size: const Offset(30, 10),
                                           child: Image.asset(
-                                            scale: 2,
+                                            scale: lebarLayar < 350
+                                                ? 3
+                                                : lebarLayar < 414
+                                                    ? 2.5
+                                                    : 2,
+                                            // scale: lebarLayar < 414 ? 2.5 : 2,
+                                            // scale: 2,
                                             'assets/weddingassets/splash_gold_topleft.png',
                                             fit: BoxFit.cover,
                                           ),
@@ -490,14 +498,21 @@ class _InvitationPageState extends State<InvitationPage> {
                                         child: TiltParallax(
                                           size: Offset(10, 10),
                                           child: Image.asset(
-                                            scale: lebarLayar / 200,
+                                            scale: lebarLayar /
+                                                (lebarLayar < 350
+                                                    ? 100
+                                                    : lebarLayar < 414
+                                                        ? 150
+                                                        : 200),
+                                            // scale: lebarLayar /
+                                            //     (lebarLayar < 414 ? 150 : 200),
                                             'assets/weddingassets/splash_gold_bottomleft.png',
                                             fit: BoxFit.cover,
                                           ),
                                         ),
                                       ),
                                     ),
-                                    //splash_gold_bottomleft
+                                    //splash_gold_bottomright
                                     Positioned(
                                       bottom: -20,
                                       right: -60,
@@ -507,7 +522,12 @@ class _InvitationPageState extends State<InvitationPage> {
                                           child: Transform.flip(
                                             flipX: true,
                                             child: Image.asset(
-                                              scale: lebarLayar / 200,
+                                              scale: lebarLayar /
+                                                  (lebarLayar < 350
+                                                      ? 100
+                                                      : lebarLayar < 414
+                                                          ? 150
+                                                          : 200),
                                               'assets/weddingassets/splash_gold_topleft.png',
                                               fit: BoxFit.cover,
                                             ),
@@ -524,31 +544,20 @@ class _InvitationPageState extends State<InvitationPage> {
                                         child: Stack(children: [
                                           Column(
                                             children: [
-                                              //Ornament
-                                              // Stack(children: [
-                                              // Positioned(
-                                              //   bottom: 0,
-                                              //   left: -7,
-                                              //   child: FadeInDown(
-                                              //     child: Image.asset(
-                                              //       scale: 3,
-                                              //       'assets/weddingassets/outline_leaf_gold.png',
-                                              //       fit: BoxFit.cover,
-                                              //     ),
-                                              //   ),
-                                              // ),
-                                              // ]),
-
                                               //Bismillah
                                               FadeInDown(
                                                 child: TiltParallax(
                                                   size: const Offset(15, 15),
                                                   child: Image.asset(
-                                                    scale:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.016,
+                                                    scale: lebarLayar *
+                                                        (lebarLayar < 350
+                                                            ? 0.03
+                                                            : lebarLayar < 414
+                                                                ? 0.02
+                                                                : 0.016),
+                                                    // (lebarLayar < 350
+                                                    //     ? 0.03
+                                                    //     : 0.016),
                                                     'assets/weddingassets/bismillah.png',
                                                     fit: BoxFit.cover,
                                                   ),
@@ -657,27 +666,75 @@ class _InvitationPageState extends State<InvitationPage> {
                                               ),
                                               SizedBox(
                                                   height: tinggiLayar * 0.03),
-                                              FadeInRight(
+                                              FadeInUp(
                                                 child: TiltParallax(
                                                     size: const Offset(15, 20),
-                                                    child: Text(
-                                                        'Info lebih lanjut ketuk tombol ❤︎ ya..',
-                                                        style:
-                                                            GoogleFonts.poppins(
-                                                          textStyle:
-                                                              const TextStyle(
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        // Text(
+                                                        //     'Info lebih lanjut ketuk tombol ❤︎ ya..',
+                                                        //     style:
+                                                        //         GoogleFonts.poppins(
+                                                        //       textStyle:
+                                                        //           const TextStyle(
+                                                        //               fontStyle:
+                                                        //                   FontStyle
+                                                        //                       .italic),
+                                                        //       fontSize: MediaQuery.of(
+                                                        //                   context)
+                                                        //               .size
+                                                        //               .width *
+                                                        //           0.03,
+                                                        //       color:
+                                                        //           Colors.brown[900],
+                                                        //     )),
+
+                                                        Text(
+                                                            'Info lebih lanjut ketuk tombol ',
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              textStyle: const TextStyle(
                                                                   fontStyle:
                                                                       FontStyle
                                                                           .italic),
-                                                          fontSize: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.03,
-                                                          color:
-                                                              Colors.brown[900],
-                                                        ))),
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.03,
+                                                              color: Colors
+                                                                  .brown[900],
+                                                            )),
+                                                        const Icon(
+                                                          Icons.favorite,
+                                                          color: Colors.brown,
+                                                          size: 14,
+                                                        ),
+                                                        Text(' yaa..',
+                                                            style: GoogleFonts
+                                                                .poppins(
+                                                              textStyle: const TextStyle(
+                                                                  fontStyle:
+                                                                      FontStyle
+                                                                          .italic),
+                                                              fontSize: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.03,
+                                                              color: Colors
+                                                                  .brown[900],
+                                                            )),
+                                                      ],
+                                                    )),
                                               ),
+
+                                              // SizedBox(
+                                              //     height: tinggiLayar * 0.1),
+
                                               SizedBox(
                                                   height: tinggiLayar * 0.1),
                                             ],
