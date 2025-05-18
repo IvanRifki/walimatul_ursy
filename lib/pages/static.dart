@@ -4,7 +4,9 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 const List<String> sampleImages = [
+  'assets/weddingassets/pwfoto/pw9.jpg',
   'assets/weddingassets/pwfoto/pw1.jpg',
+  'assets/weddingassets/pwfoto/pw8.jpg',
   'assets/weddingassets/pwfoto/pw2.jpg',
   'assets/weddingassets/pwfoto/pw3.jpg',
   'assets/weddingassets/pwfoto/pw4.jpg',

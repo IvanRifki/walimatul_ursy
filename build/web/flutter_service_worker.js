@@ -3,9 +3,9 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"assets/AssetManifest.bin": "649383de94792869b5a2c673b3ad6775",
-"assets/AssetManifest.bin.json": "3703d5a3316e8b2a74abb92843882782",
-"assets/AssetManifest.json": "24ef67b4bcfbfb4452fd9a7131a7db4b",
+const RESOURCES = {"assets/AssetManifest.bin": "ab9958c316885610f8783faa4dfaa5e1",
+"assets/AssetManifest.bin.json": "9aeba0d08a6dc786ce3a9813331e7dad",
+"assets/AssetManifest.json": "1ed356e8bf81f8ad9923cfa21a7fc5da",
 "assets/assets/weddingassets/bg_flower.png": "78f9e2b47ee32111f885be1db88f88a4",
 "assets/assets/weddingassets/bismillah.png": "a473c8f944749f09242c4b2d6f2812de",
 "assets/assets/weddingassets/feather_bottom.png": "4a52fb655bbd7540eced20d420259115",
@@ -21,6 +21,8 @@ const RESOURCES = {"assets/AssetManifest.bin": "649383de94792869b5a2c673b3ad6775
 "assets/assets/weddingassets/pwfoto/pw5.jpg": "f8a068f3eee45d8e34b2214065cc24a3",
 "assets/assets/weddingassets/pwfoto/pw6.jpg": "2ce1e0fcd9fbde81c1cc4b0d7e0ff94a",
 "assets/assets/weddingassets/pwfoto/pw7.jpg": "a6b31dda8a7a075f28dd228db99457db",
+"assets/assets/weddingassets/pwfoto/pw8.jpg": "41daa615ece55c08d6d7c9c27536ea1a",
+"assets/assets/weddingassets/pwfoto/pw9.jpg": "ba05cdcef99b2ba48e64052f7dac71f1",
 "assets/assets/weddingassets/splash_gold_bottomleft.png": "d828ff6430d2dbb476e9b1c39dcf5915",
 "assets/assets/weddingassets/splash_gold_bottomright.png": "548143a26fedca60b9b1f7174499ab53",
 "assets/assets/weddingassets/splash_gold_middleright.png": "db730c1894b3c34305e305b62929b4c0",
@@ -40,6 +42,8 @@ const RESOURCES = {"assets/AssetManifest.bin": "649383de94792869b5a2c673b3ad6775
 "assets/assets%255Cweddingassets%255Cpwfoto%255Cpw5.jpg": "f8a068f3eee45d8e34b2214065cc24a3",
 "assets/assets%255Cweddingassets%255Cpwfoto%255Cpw6.jpg": "2ce1e0fcd9fbde81c1cc4b0d7e0ff94a",
 "assets/assets%255Cweddingassets%255Cpwfoto%255Cpw7.jpg": "a6b31dda8a7a075f28dd228db99457db",
+"assets/assets%255Cweddingassets%255Cpwfoto%255Cpw8.jpg": "41daa615ece55c08d6d7c9c27536ea1a",
+"assets/assets%255Cweddingassets%255Cpwfoto%255Cpw9.jpg": "ba05cdcef99b2ba48e64052f7dac71f1",
 "assets/assets%255Cweddingassets%255Csplash_gold_bottomleft.png": "d828ff6430d2dbb476e9b1c39dcf5915",
 "assets/assets%255Cweddingassets%255Csplash_gold_bottomright.png": "548143a26fedca60b9b1f7174499ab53",
 "assets/assets%255Cweddingassets%255Csplash_gold_middleright.png": "db730c1894b3c34305e305b62929b4c0",
@@ -61,15 +65,16 @@ const RESOURCES = {"assets/AssetManifest.bin": "649383de94792869b5a2c673b3ad6775
 "canvaskit/skwasm.worker.js": "89990e8c92bcb123999aa81f7e203b1c",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "flutter.js": "f393d3c16b631f36852323de8e583132",
-"flutter_bootstrap.js": "913be137268c8f5d84bcdbd15f277c02",
+"flutter_bootstrap.js": "da530345592e17646d8f9fb73a33b096",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-512.png": "96e752610906ba2a93c65f8abe1645f1",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "index.html": "5b16af525f736773ff29ddcd3bde8013",
 "/": "5b16af525f736773ff29ddcd3bde8013",
-"main.dart.js": "95976ba69eec8c66d0f0b0d378101460",
+"main.dart.js": "adf979661e0e2929981494105ef418ba",
 "manifest.json": "875f43765f755556c12296847c3f6003",
+"vercel.json": "85a935fb1851f9ece04369a85ae2cfb6",
 "version.json": "3c6ab019ac8942cf1572e2bf774b2d53"};
 // The application shell files that are downloaded before a service worker can
 // start.
