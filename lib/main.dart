@@ -60,6 +60,7 @@ class _IvanMiniAppState extends State<IvanMiniApp> {
         // Souvenir Updater
         GoRoute(
           path: '/app/souvenir',
+          // builder: (context, state) => SouvenirUpdaterApp(),
           builder: (context, state) => SouvenirUpdaterApp(),
         ),
       ],

@@ -19,7 +19,7 @@ class SouvenirUpdaterApp extends StatefulWidget {
 }
 
 class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
-  final _kodeController = TextEditingController();
+  late final _kodeController = TextEditingController();
   String? _statusTerpilih;
   bool _isLoading = false;
   int? _foundRow;
@@ -176,87 +176,216 @@ class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
     );
   }
 
+  // void _handleBarcode(BarcodeCapture barcodes) {
+  //   if (mounted) {
+  //     setState(() {
+  //       _barcode = barcodes.barcodes.firstOrNull;
+  //     });
+  //   }
+  // }
   void _handleBarcode(BarcodeCapture barcodes) {
-    if (mounted) {
-      setState(() {
-        _barcode = barcodes.barcodes.firstOrNull;
-      });
+    if (barcodes.barcodes.isNotEmpty) {
+      final scannedValue = barcodes.barcodes.first.displayValue;
+      if (scannedValue != null && mounted) {
+        setState(() {
+          _barcode = barcodes.barcodes.first;
+          _kodeController.text = scannedValue; // Auto-fill ke text field
+        });
+        _cariBarisKodeUndangan(scannedValue); // Auto-cari langsung
+      }
     }
   }
 
   @override
+  void dispose() {
+    _cameraController.dispose();
+    _kodeController.dispose();
+    super.dispose();
+  }
+
+  Widget _buildScanner() {
+    return MobileScanner(onDetect: _handleBarcode);
+  }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text("Update Souvenir")),
+//       body: Padding(
+//         padding: const EdgeInsets.all(16.0),
+//         child: Column(
+//           children: [
+//             _buildScanner(),
+//             TextField(
+//               controller: _kodeController,
+//               decoration: InputDecoration(
+//                 labelText: "Kode Undangan",
+//                 border: const OutlineInputBorder(),
+//               ),
+//             ),
+//             SizedBox(height: 16),
+//             ElevatedButton(
+//               onPressed: () {
+//                 _cariBarisKodeUndangan(_kodeController.text);
+//               },
+//               child: Text("Cari"),
+//             ),
+//             SizedBox(height: 20),
+//             if (_foundRow != null) ...[
+//               Text("✅ Kode ditemukan di baris $_foundRow"),
+//               if (_foundGuestData != null) ...[
+//                 Text("Kode: ${_foundGuestData!['Kode']}"),
+//                 Text("Title: ${_foundGuestData!['Title']}"),
+//                 Text("Nama: ${_foundGuestData!['Nama']}"),
+//                 Text("Souvenir: ${_foundGuestData!['Souvenir']}"),
+//               ],
+//               // DropdownButtonFormField<String>(
+//               //   value: _statusTerpilih,
+//               //   items: _statusList
+//               //       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+//               //       .toList(),
+//               //   onChanged: (val) {
+//               //     setState(() {
+//               //       _statusTerpilih = val;
+//               //     });
+//               //   },
+//               //   decoration: InputDecoration(
+//               //     labelText: "Pilih Status Souvenir",
+//               //     border: OutlineInputBorder(),
+//               //   ),
+//               // ),
+//               // SizedBox(height: 16),
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                 children: [
+//                   // ElevatedButton.icon(
+//                   //   icon: Icon(Icons.save),
+//                   //   label: Text("Update Status"),
+//                   //   onPressed: _statusTerpilih != null
+//                   //       ? () => updateSouvenirStatus(_foundRow!, _statusTerpilih!)
+//                   //       : null,
+//                   // ),
+//                   ElevatedButton.icon(
+//                     icon: _isLoading
+//                         ? CircularProgressIndicator(strokeWidth: 2)
+//                         : Icon(Icons.check_circle),
+//                     label: Text("Ambil Souvenir"),
+//                     onPressed: (_foundRow != null)
+//                         ? () =>
+//                             updateSouvenirStatus(_foundRow!, 'Sudah Diambil')
+//                         : null,
+
+//                     // onPressed: () =>
+//                     //     updateSouvenirStatus(_foundRow!, 'Sudah Diambil'),
+//                   ),
+//                   ElevatedButton.icon(
+//                     icon: _isLoading
+//                         ? CircularProgressIndicator(strokeWidth: 2)
+//                         : Icon(Icons.cancel),
+//                     label: const Text("Batal"),
+//                     onPressed: (_foundRow != null)
+//                         ? () =>
+//                             updateSouvenirStatus(_foundRow!, 'Belum Diambil')
+//                         : null,
+
+//                     // onPressed: () =>
+//                     //     updateSouvenirStatus(_foundRow!, 'Belum Diambil'),
+//                   )
+//                 ],
+//               ),
+//             ],
+//             if (_isLoading) CircularProgressIndicator(),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
+  final MobileScannerController _cameraController = MobileScannerController();
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Update Souvenir")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      // appBar: AppBar(title: const Text('Scan Kode Undangan')),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            MobileScanner(onDetect: _handleBarcode),
-            TextField(
-              controller: _kodeController,
-              decoration: InputDecoration(
-                labelText: "Kode Undangan",
-                border: OutlineInputBorder(),
+            // TAMPILKAN KAMERA DI SINI
+            AspectRatio(
+              aspectRatio: 1, // Kotak (1:1)
+              child: Padding(
+                padding: const EdgeInsets.all(0),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: MobileScanner(
+                    controller: _cameraController,
+                    onDetect: _handleBarcode,
+                  ),
+                ),
               ),
             ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                _cariBarisKodeUndangan(_kodeController.text);
-              },
-              child: Text("Cari"),
+
+            const SizedBox(height: 16),
+
+            // TEXTFIELD INPUT MANUAL
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 0),
+              child: TextField(
+                textAlign: TextAlign.center,
+                controller: _kodeController,
+                decoration: const InputDecoration(
+                  alignLabelWithHint: true,
+                  floatingLabelAlignment: FloatingLabelAlignment.center,
+                  labelText: 'Kode Undangan',
+                  border: OutlineInputBorder(),
+                ),
+              ),
             ),
-            SizedBox(height: 20),
-            if (_foundRow != null) ...[
-              Text("✅ Kode ditemukan di baris $_foundRow"),
-              if (_foundGuestData != null) ...[
-                Text("Kode: ${_foundGuestData!['Kode']}"),
-                Text("Title: ${_foundGuestData!['Title']}"),
-                Text("Nama: ${_foundGuestData!['Nama']}"),
-                Text("Souvenir: ${_foundGuestData!['Souvenir']}"),
+
+            const SizedBox(height: 16),
+
+            // TOMBOL CARI & AMBIL SOUVENIR
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () {
+                    _cariBarisKodeUndangan(_kodeController.text);
+                  },
+                  icon: const Icon(Icons.search),
+                  label: const Text("Cari"),
+                ),
+                ElevatedButton.icon(
+                  onPressed: (_foundRow != null && !_isLoading)
+                      ? () => updateSouvenirStatus(_foundRow!, 'Sudah Diambil')
+                      : null,
+                  icon: _isLoading
+                      ? const SizedBox(
+                          width: 16,
+                          height: 16,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.card_giftcard),
+                  label: const Text("Ambil Souvenir"),
+                ),
               ],
-              // DropdownButtonFormField<String>(
-              //   value: _statusTerpilih,
-              //   items: _statusList
-              //       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-              //       .toList(),
-              //   onChanged: (val) {
-              //     setState(() {
-              //       _statusTerpilih = val;
-              //     });
-              //   },
-              //   decoration: InputDecoration(
-              //     labelText: "Pilih Status Souvenir",
-              //     border: OutlineInputBorder(),
-              //   ),
-              // ),
-              // SizedBox(height: 16),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  // ElevatedButton.icon(
-                  //   icon: Icon(Icons.save),
-                  //   label: Text("Update Status"),
-                  //   onPressed: _statusTerpilih != null
-                  //       ? () => updateSouvenirStatus(_foundRow!, _statusTerpilih!)
-                  //       : null,
-                  // ),
-                  ElevatedButton.icon(
-                      icon: Icon(Icons.check_circle),
-                      label: Text("Ambil Souvenir"),
-                      onPressed: () =>
-                          updateSouvenirStatus(_foundRow!, 'Sudah Diambil')),
-                  ElevatedButton.icon(
-                    icon: Icon(Icons.cancel),
-                    label: Text("Batal"),
-                    onPressed: () =>
-                        updateSouvenirStatus(_foundRow!, 'Belum Diambil'),
-                  )
-                ],
+            ),
+
+            const SizedBox(height: 16),
+
+            // INFO TAMPILAN
+            if (_foundGuestData != null)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Card(
+                  child: ListTile(
+                    title: Text(_foundGuestData!['Nama'] ?? 'Tidak ada nama'),
+                    subtitle: Text("Status: ${_foundGuestData!['Souvenir']}"),
+                  ),
+                ),
               ),
-            ],
-            if (_isLoading) CircularProgressIndicator(),
           ],
         ),
       ),

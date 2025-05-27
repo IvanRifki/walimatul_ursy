@@ -1,8 +1,5 @@
-import 'dart:math';
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
-// import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,7 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:walimatul_ursy/pages/static.dart';
-// import 'package:universal_html/html.dart';
+import 'package:delayed_display/delayed_display.dart';
 
 const String mapsUrl = 'https://maps.app.goo.gl/opSoVsW2TGiraoMS7';
 
@@ -241,28 +238,52 @@ void showTabModal(BuildContext context, String guestName, String guestCode,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     SizedBox(height: 20),
-                                    FadeInDown(
-                                      child: TiltParallax(
-                                        size: const Offset(15, 20),
-                                        child: TeksBiasa(
-                                            'Insyaallah akan diselenggarakan pada:',
-                                            context),
-                                      ),
-                                    ),
-                                    FadeInDown(
-                                      child: TiltParallax(
-                                        size: const Offset(15, 20),
-                                        child: TeksWaktuBold(
-                                            'Sabtu, 27 Desember 2025', context),
-                                      ),
-                                    ),
+                                    DelayedDisplay(
+                                        slidingCurve: Curves.linear,
+                                        delay: Duration(milliseconds: 300),
+                                        child: Column(
+                                          children: [
+                                            TiltParallax(
+                                              size: const Offset(15, 20),
+                                              child: TeksBiasa(
+                                                  'Insyaallah akan diselenggarakan pada:',
+                                                  context),
+                                            ),
+                                            FadeInDown(
+                                              child: TiltParallax(
+                                                size: const Offset(15, 20),
+                                                child: TeksWaktuBold(
+                                                    'Sabtu, 27 Desember 2025',
+                                                    context),
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                    // FadeInDown(
+                                    //   child: TiltParallax(
+                                    //     size: const Offset(15, 20),
+                                    //     child: TeksBiasa(
+                                    //         'Insyaallah akan diselenggarakan pada:',
+                                    //         context),
+                                    //   ),
+                                    // ),
+                                    // FadeInDown(
+                                    //   child: TiltParallax(
+                                    //     size: const Offset(15, 20),
+                                    //     child: TeksWaktuBold(
+                                    //         'Sabtu, 27 Desember 2025', context),
+                                    //   ),
+                                    // ),
                                     SizedBox(
                                         height: MediaQuery.of(context)
                                                 .size
                                                 .height
                                                 .toInt() *
                                             0.02),
-                                    Row(
+                                    DelayedDisplay(
+                                      slidingCurve: Curves.linear,
+                                      delay: Duration(milliseconds: 300),
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
@@ -307,7 +328,9 @@ void showTabModal(BuildContext context, String guestName, String guestCode,
                                               ),
                                             ],
                                           )
-                                        ]),
+                                        ],
+                                      ),
+                                    ),
                                   ]),
                             ]),
                             child: Container())),
