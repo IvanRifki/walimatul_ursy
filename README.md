@@ -1,6 +1,6 @@
-# walimatul_ursy
+# Walimatul'Ursy
 
-A new Flutter project.
+Digital Wedding Invitataion of Novia & Ivan.
 
 ## Getting Started
 
