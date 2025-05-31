@@ -10,8 +10,8 @@ import 'package:animate_do/animate_do.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
-import 'package:walimatul_ursy/pages/modalbottom.dart';
-import 'package:walimatul_ursy/pages/static.dart';
+import 'package:WalimatulUrsy/pages/modalbottom.dart';
+import 'package:WalimatulUrsy/pages/static.dart';
 import 'package:knight_confetti/knight_confetti.dart';
 
 void main() {

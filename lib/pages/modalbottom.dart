@@ -8,7 +8,7 @@ import 'package:knight_confetti/knight_confetti.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
-import 'package:walimatul_ursy/pages/static.dart';
+import 'package:WalimatulUrsy/pages/static.dart';
 import 'package:delayed_display/delayed_display.dart';
 
 const String mapsUrl = 'https://maps.app.goo.gl/opSoVsW2TGiraoMS7';
@@ -285,7 +285,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode,
                                       delay: Duration(milliseconds: 300),
                                       child: Row(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                            MainAxisAlignment.center,
                                         children: [
                                           Column(
                                             children: [
@@ -306,6 +306,13 @@ void showTabModal(BuildContext context, String guestName, String guestCode,
                                                 ),
                                               ),
                                             ],
+                                          ),
+                                          SizedBox(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width
+                                                    .toInt() *
+                                                0.05,
                                           ),
                                           Column(
                                             children: [
@@ -1095,8 +1102,26 @@ void showTabModal(BuildContext context, String guestName, String guestCode,
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(height: 20),
-                              TeksBiasa("Deskripsi awal.", context),
+                              const SizedBox(height: 20),
+                              Image.asset(
+                                'assets/weddingassets/ni_logo.png',
+                                fit: BoxFit.fitWidth,
+                                scale: 1.5,
+                              ),
+                              TeksBiasaBold(
+                                  "Di antara kita dan semua yang berpasangan,",
+                                  context),
+                              TeksBiasa(
+                                  "ada takdir yang pelan-pelan menyulam harapan.",
+                                  context),
+                              const SizedBox(height: 20),
+                              TeksBiasaBold(
+                                  "Jalan di utara, tenang dalam langkah,",
+                                  context),
+                              TeksBiasa(
+                                  "dan tujuan yang berdampingan,", context),
+                              TeksBiasa(
+                                  "tak lagi sendiri menafsir arah.", context),
                               SizedBox(height: 20),
                               // TeksBiasa("Fotonya kalau ada.", context),
                               FanCarouselImageSlider.sliderType1(

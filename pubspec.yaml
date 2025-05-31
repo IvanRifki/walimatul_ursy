@@ -1,4 +1,5 @@
-name: walimatul_ursy
+# name: walimatul_ursy
+name: WalimatulUrsy
 # description: "A new Flutter project."
 description: "Walimatul'Ursy Novia & Ivan."
 # The following line prevents the package from being accidentally published to
@@ -88,6 +89,7 @@ flutter:
     - assets\weddingassets\flower_bottomleft.png
     - assets\weddingassets\flower_topright.png
     - assets\weddingassets\bismillah.png
+    - assets\weddingassets\ni_logo.png
     - assets\weddingassets\kekal.mp3
     - assets\weddingassets\pwfoto\pw1.jpg
     - assets\weddingassets\pwfoto\pw2.jpg

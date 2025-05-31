@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-import 'package:walimatul_ursy/pages/belumdiundang.dart';
-import 'package:walimatul_ursy/pages/ourwedding.dart';
-import 'package:walimatul_ursy/pages/souvenir_updater.dart';
-import 'package:walimatul_ursy/pages/static.dart';
+import 'package:WalimatulUrsy/pages/belumdiundang.dart';
+import 'package:WalimatulUrsy/pages/ourwedding.dart';
+import 'package:WalimatulUrsy/pages/souvenir_updater.dart';
+import 'package:WalimatulUrsy/pages/static.dart';
 
 void main() {
   setUrlStrategy(PathUrlStrategy());
