@@ -15,6 +15,10 @@ const List<String> sampleImages = [
   'assets/weddingassets/pwfoto/pw7.jpg',
 ];
 
+const String bankMuamalat = "1250004626";
+const String bankBSI = "7149376377";
+const String bankBRI = "204601011791501";
+
 Text TeksBiasa(String text, BuildContext context) {
   return Text(
     text,
