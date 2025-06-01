@@ -1232,7 +1232,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode,
                                     );
                                   },
                                   icon: const Icon(Icons.copy, size: 10),
-                                  label: TeksBiasaBold(bankMuamalat, context),
+                                  label: TeksBiasaBold(bankBSI, context),
                                 ),
                                 const SizedBox(height: 20),
                                 Image.asset(
@@ -1251,7 +1251,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode,
                                     );
                                   },
                                   icon: const Icon(Icons.copy, size: 10),
-                                  label: TeksBiasaBold(bankMuamalat, context),
+                                  label: TeksBiasaBold(bankBRI, context),
                                 ),
                                 const SizedBox(height: 20),
                                 TeksBiasa("Alamat", context),
