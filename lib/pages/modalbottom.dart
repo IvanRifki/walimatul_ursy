@@ -1228,7 +1228,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode,
                                 TextButton.icon(
                                   onPressed: () async {
                                     await Clipboard.setData(
-                                      const ClipboardData(text: bankMuamalat),
+                                      const ClipboardData(text: bankBSI),
                                     );
                                   },
                                   icon: const Icon(Icons.copy, size: 10),
@@ -1247,7 +1247,7 @@ void showTabModal(BuildContext context, String guestName, String guestCode,
                                 TextButton.icon(
                                   onPressed: () async {
                                     await Clipboard.setData(
-                                      const ClipboardData(text: bankMuamalat),
+                                      const ClipboardData(text: bankBRI),
                                     );
                                   },
                                   icon: const Icon(Icons.copy, size: 10),
