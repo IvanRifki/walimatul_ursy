@@ -86,9 +86,9 @@ class _InvitationPageState extends State<InvitationPage> {
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.white, // <-- warna status bar
+      statusBarColor: Colors.white, // warna status bar
       statusBarIconBrightness:
-          Brightness.dark, // <-- warna ikon status bar (dark = ikon hitam)
+          Brightness.dark, // warna ikon status bar (dark = ikon hitam)
     ));
 
     fetchSheetData();
@@ -101,32 +101,15 @@ class _InvitationPageState extends State<InvitationPage> {
     String mobileOS = "Unknown";
 
     String ukuranLayar = "Unknown";
-    // String DeviceBrandType = "Unknown";
 
     int lebarLayar = MediaQuery.of(context).size.width.toInt();
     int tinggiLayar = MediaQuery.of(context).size.height.toInt();
-
-    print('ini width ${MediaQuery.of(context).size.width}');
 
     if (userAgent.contains("mobile") ||
         userAgent.contains("android") ||
         userAgent.contains("iphone")) {
       deviceType = "HP";
       mobileOS = userAgent.contains("android") ? "Android" : "iOS";
-
-      // if (lebarLayar == 414 && tinggiLayar >= 725) {
-      //   DeviceBrandType = "IP: XR, 11, 11 PRO MAX";
-      //   ukuranLayar = "414 x 725";
-      // } else if (lebarLayar == 375 && tinggiLayar >= 641) {
-      //   DeviceBrandType = "IP: X, 11 PRO, 13 Mini";
-      //   ukuranLayar = "375 x 641";
-      // } else if (lebarLayar == 360 && tinggiLayar >= 609) {
-      //   DeviceBrandType = "IP: 12 Mini";
-      //   ukuranLayar = "360 x 609";
-      // } else if (lebarLayar == 390 && tinggiLayar >= 673) {
-      //   DeviceBrandType = "IP: 12, 12 PRO, 13, 13 PRO";
-      //   ukuranLayar = "390 x 673";
-      // }
     } else {
       deviceType = "Laptop/PC";
     }
@@ -174,11 +157,10 @@ class _InvitationPageState extends State<InvitationPage> {
                     showAboutDialog(context: context, children: [
                       Column(
                         children: [
-                          Text('ini perangkat ${deviceType}'),
-                          Text('OS yang digunakan ${mobileOS}'),
+                          Text('ini perangkat $deviceType'),
+                          Text('OS yang digunakan $mobileOS'),
                           Text(ukuranLayar),
-                          Text(
-                              'ukurannya read: ${lebarLayar} x ${tinggiLayar}'),
+                          Text('ukurannya read: $lebarLayar x $tinggiLayar'),
                         ],
                       )
                     ]);

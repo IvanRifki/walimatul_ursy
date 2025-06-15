@@ -11,11 +11,11 @@ void main() {
 }
 
 class SouvenirUpdaterApp extends StatefulWidget {
-  // const SouvenirUpdaterApp({Key? key}) : super(key: key);
   const SouvenirUpdaterApp({super.key});
 
   @override
-  _SouvenirUpdaterAppState createState() => _SouvenirUpdaterAppState();
+  createState() => _SouvenirUpdaterAppState();
+  // _SouvenirUpdaterAppState createState() => _SouvenirUpdaterAppState();
 }
 
 class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
@@ -33,22 +33,6 @@ class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
   final _updateUrl = "https://souvenir-updater.vercel.app/api/update-souvenir";
 
   List<List<dynamic>> _spreadsheetData = [];
-
-  // Future<void> _fetchSpreadsheetData() async {
-  //   setState(() => _isLoading = true);
-  //   final response = await http.get(Uri.parse(_fetchUrl));
-  //   if (response.statusCode == 200) {
-  //     final jsonData = jsonDecode(response.body);
-  //     setState(() {
-  //       _spreadsheetData = List<List<dynamic>>.from(
-  //         jsonData.map((row) => List<dynamic>.from(row)),
-  //       );
-  //     });
-  //   } else {
-  //     print("Gagal ambil data");
-  //   }
-  //   setState(() => _isLoading = false);
-  // }
 
   Future<void> _fetchSpreadsheetData() async {
     setState(() => _isLoading = true);
@@ -119,7 +103,7 @@ class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
         _foundGuestData = null;
       });
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Kode undangan tidak ditemukan")),
+        const SnackBar(content: Text("Kode undangan tidak ditemukan")),
       );
     }
   }
@@ -140,10 +124,15 @@ class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
       );
 
       if (response.statusCode == 200) {
-        _cariBarisKodeUndangan(_kodeController.text);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("✅ Sukses update souvenir")),
-        );
+        // _cariBarisKodeUndangan(_kodeController.text);
+        _cariBarisKodeUndangan(_kodeController.text).then((_) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("✅ Sukses update souvenir")),
+          );
+        });
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   const SnackBar(content: Text("✅ Sukses update souvenir")),
+        // );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -163,7 +152,7 @@ class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
   Widget _barcodePreview(Barcode? value) {
     if (value == null) {
       return const Text(
-        'Scan something!',
+        'Scan QR Undangan!',
         overflow: TextOverflow.fade,
         style: TextStyle(color: Colors.white),
       );
@@ -176,13 +165,6 @@ class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
     );
   }
 
-  // void _handleBarcode(BarcodeCapture barcodes) {
-  //   if (mounted) {
-  //     setState(() {
-  //       _barcode = barcodes.barcodes.firstOrNull;
-  //     });
-  //   }
-  // }
   void _handleBarcode(BarcodeCapture barcodes) {
     if (barcodes.barcodes.isNotEmpty) {
       final scannedValue = barcodes.barcodes.first.displayValue;
@@ -207,107 +189,11 @@ class _SouvenirUpdaterAppState extends State<SouvenirUpdaterApp> {
     return MobileScanner(onDetect: _handleBarcode);
   }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text("Update Souvenir")),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           children: [
-//             _buildScanner(),
-//             TextField(
-//               controller: _kodeController,
-//               decoration: InputDecoration(
-//                 labelText: "Kode Undangan",
-//                 border: const OutlineInputBorder(),
-//               ),
-//             ),
-//             SizedBox(height: 16),
-//             ElevatedButton(
-//               onPressed: () {
-//                 _cariBarisKodeUndangan(_kodeController.text);
-//               },
-//               child: Text("Cari"),
-//             ),
-//             SizedBox(height: 20),
-//             if (_foundRow != null) ...[
-//               Text("✅ Kode ditemukan di baris $_foundRow"),
-//               if (_foundGuestData != null) ...[
-//                 Text("Kode: ${_foundGuestData!['Kode']}"),
-//                 Text("Title: ${_foundGuestData!['Title']}"),
-//                 Text("Nama: ${_foundGuestData!['Nama']}"),
-//                 Text("Souvenir: ${_foundGuestData!['Souvenir']}"),
-//               ],
-//               // DropdownButtonFormField<String>(
-//               //   value: _statusTerpilih,
-//               //   items: _statusList
-//               //       .map((e) => DropdownMenuItem(value: e, child: Text(e)))
-//               //       .toList(),
-//               //   onChanged: (val) {
-//               //     setState(() {
-//               //       _statusTerpilih = val;
-//               //     });
-//               //   },
-//               //   decoration: InputDecoration(
-//               //     labelText: "Pilih Status Souvenir",
-//               //     border: OutlineInputBorder(),
-//               //   ),
-//               // ),
-//               // SizedBox(height: 16),
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   // ElevatedButton.icon(
-//                   //   icon: Icon(Icons.save),
-//                   //   label: Text("Update Status"),
-//                   //   onPressed: _statusTerpilih != null
-//                   //       ? () => updateSouvenirStatus(_foundRow!, _statusTerpilih!)
-//                   //       : null,
-//                   // ),
-//                   ElevatedButton.icon(
-//                     icon: _isLoading
-//                         ? CircularProgressIndicator(strokeWidth: 2)
-//                         : Icon(Icons.check_circle),
-//                     label: Text("Ambil Souvenir"),
-//                     onPressed: (_foundRow != null)
-//                         ? () =>
-//                             updateSouvenirStatus(_foundRow!, 'Sudah Diambil')
-//                         : null,
-
-//                     // onPressed: () =>
-//                     //     updateSouvenirStatus(_foundRow!, 'Sudah Diambil'),
-//                   ),
-//                   ElevatedButton.icon(
-//                     icon: _isLoading
-//                         ? CircularProgressIndicator(strokeWidth: 2)
-//                         : Icon(Icons.cancel),
-//                     label: const Text("Batal"),
-//                     onPressed: (_foundRow != null)
-//                         ? () =>
-//                             updateSouvenirStatus(_foundRow!, 'Belum Diambil')
-//                         : null,
-
-//                     // onPressed: () =>
-//                     //     updateSouvenirStatus(_foundRow!, 'Belum Diambil'),
-//                   )
-//                 ],
-//               ),
-//             ],
-//             if (_isLoading) CircularProgressIndicator(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
   final MobileScannerController _cameraController = MobileScannerController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: const Text('Scan Kode Undangan')),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

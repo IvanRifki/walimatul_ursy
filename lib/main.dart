@@ -44,7 +44,7 @@ class _IvanMiniAppState extends State<IvanMiniApp> {
       routes: [
         GoRoute(
           path: '/',
-          builder: (context, state) => BelumDiundangPage(),
+          builder: (context, state) => const BelumDiundangPage(),
         ),
 
         // WEDDING SECTION START
@@ -55,13 +55,15 @@ class _IvanMiniAppState extends State<IvanMiniApp> {
               if (fetchSheetDataPlain(guestName) == '')
                 return BelumDiundangPage();
               return InvitationPage(guestName: guestName);
+              // return lebarLayar > 600
+              //     ? InvitationPagePC(guestName: guestName)
+              //     : InvitationPage(guestName: guestName);
             }),
 
         // Souvenir Updater
         GoRoute(
           path: '/app/souvenir',
-          // builder: (context, state) => SouvenirUpdaterApp(),
-          builder: (context, state) => SouvenirUpdaterApp(),
+          builder: (context, state) => const SouvenirUpdaterApp(),
         ),
       ],
     );

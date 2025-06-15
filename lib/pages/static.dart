@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:convert';
@@ -65,7 +66,7 @@ Text TeksNamaPengantin(String text, BuildContext context) {
 // Function
 Future<void> updateSouvenirStatus(int row, String status) async {
   final url = Uri.parse(
-      'https://script.google.com/macros/s/AKfycbw3frcqFCwJiPkxBJ5yTmuu5mDLp7qhQZPMQoQglbrUbzLlxdDTbAQ7-jqySyPJ3DHS/exec'); // Ini URL APP SCRIPT
+      'https://script.google.com/macros/s/AKfycbw3frcqFCwJiPkxBJ5yTmuu5mDLp7qhQZPMQoQglbrUbzLlxdDTbAQ7-jqySyPJ3DHS/exec'); // Ini URL APP SCRIPT dari spreadsheet
 
   final response = await http.post(
     url,
@@ -108,31 +109,55 @@ Future fetchSheetDataPlain(String guestName) async {
 
       return foundGuest;
     }
+  }
+}
 
-    // return foundGuest;
+Future<Map<String, dynamic>?> fetchGuestByCode(String code) async {
+  try {
+    final response = await http.get(
+      Uri.parse(
+        'https://opensheet.elk.sh/1IFycFK3i-AzaZepz0C03dpkoMxemwrBQ45WjwKYVmEU/TamuUndanganwithCode',
+      ),
+    );
 
-    // if (foundGuest.isEmpty) {
-    //   // Redirect ke halaman lain kalau tidak ditemukan
-    //   if (mounted) {
-    //     Navigator.pushReplacement(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (_) => BelumDiundangPage()), // ganti sesuai halamanmu
-    //     );
-    //   }
-    //   return;
-    // }
+    if (response.statusCode == 200) {
+      final List<dynamic> data = jsonDecode(response.body);
+      final List<Map<String, dynamic>> sheetDataTamu =
+          data.cast<Map<String, dynamic>>();
 
-    //   setState(() {
-    //     guestCode = foundGuest['Kode Undangan'];
-    //     guestNameAfterDecode =
-    //         '${foundGuest['Title']} ${foundGuest['Nama Undangan']}';
-    //     isLoading = false;
-    //   });
-    // } else {
-    //   setState(() {
-    //     guestNameAfterDecode = '';
-    //     isLoading = false;
-    //   });
+      final foundGuest = sheetDataTamu.firstWhere(
+        (item) => item['Kode Undangan'].toString() == code,
+        orElse: () => {},
+      );
+
+      return foundGuest.isEmpty ? null : foundGuest;
+    } else {
+      return null;
+    }
+  } catch (e) {
+    print('Error fetching guest: $e');
+    return null;
+  }
+}
+
+class AudioService {
+  final AudioPlayer _audioPlayer = AudioPlayer();
+  bool _isPlaying = false;
+
+  bool get isPlaying => _isPlaying;
+
+  Future<void> toggleAudio(
+      {String assetPath = 'weddingassets/kekal.mp3'}) async {
+    if (_isPlaying) {
+      await _audioPlayer.stop();
+    } else {
+      await _audioPlayer.play(AssetSource(assetPath));
+    }
+    _isPlaying = !_isPlaying;
+  }
+
+  Future<void> stopAudio() async {
+    await _audioPlayer.stop();
+    _isPlaying = false;
   }
 }
