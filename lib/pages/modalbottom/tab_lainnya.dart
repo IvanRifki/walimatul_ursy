@@ -3,7 +3,6 @@ import 'package:delayed_display/delayed_display.dart';
 import 'package:fan_carousel_image_slider/fan_carousel_image_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ContentTabLainnya extends StatelessWidget {
   const ContentTabLainnya({super.key});
@@ -83,7 +82,7 @@ class ContentTabLainnya extends StatelessWidget {
               TeksBiasa("Kami yang berbahagia", context),
               TeksNamaPengantin("Novia & Ivan", context),
               const SizedBox(height: 40),
-              TeksBiasa("Kirim Hadiah ke pengantin.", context),
+              TeksBiasaBold("Kirim Hadiah ke pengantin.", context),
               const SizedBox(height: 20),
               _bankWidget(context, 'assets/weddingassets/muamalat.png',
                   'Bank Muamalat an IVAN RIFKI NUR ALIF', bankMuamalat),
@@ -92,16 +91,12 @@ class ContentTabLainnya extends StatelessWidget {
               _bankWidget(context, 'assets/weddingassets/bri.png',
                   'Bank BRI an IVAN RIFKI NUR ALIF', bankBRI),
               const SizedBox(height: 20),
-              TeksBiasa("Alamat", context),
-              Text(
-                "Ini alamat tempat tinggal kita nanti kalau ada yang mau kirim kado 🎁 yaa..",
-                style: GoogleFonts.poppins(
-                  fontSize: MediaQuery.of(context).size.width * 0.03,
-                  color: Colors.brown[900],
-                ),
-              ),
+              TeksBiasaBold("Alamat", context),
+              TeksBiasa(
+                  "Ini alamat tempat tinggal kita nanti kalau ada yang mau kirim kado 🎁 yaa..",
+                  context),
               const SizedBox(height: 20),
-              TeksBiasa("Penutup", context),
+              TeksBiasaBold("Penutup", context),
               const SizedBox(height: 20),
             ],
           ),
@@ -125,6 +120,12 @@ class ContentTabLainnya extends StatelessWidget {
             TeksBiasa(bankName, context),
             const SizedBox(height: 10),
             TextButton.icon(
+              style: TextButton.styleFrom(
+                iconColor: Colors.brown[900],
+              ),
+              icon: const Icon(Icons.copy, size: 16),
+              label: TeksWaktuBold(bankNo, context),
+              // wkwkwk
               onPressed: () async {
                 final scaffoldMessenger = ScaffoldMessenger.of(innerContext);
                 await Clipboard.setData(ClipboardData(text: bankNo));
@@ -147,8 +148,6 @@ class ContentTabLainnya extends StatelessWidget {
                   ),
                 );
               },
-              icon: const Icon(Icons.copy, size: 10),
-              label: TeksBiasaBold(bankNo, context),
             ),
             const SizedBox(height: 20),
           ],

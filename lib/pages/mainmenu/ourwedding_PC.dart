@@ -1,19 +1,19 @@
 import 'dart:math';
-import 'package:WalimatulUrsy/pages/ourwedding_helper.dart';
+import 'package:WalimatulUrsy/pages/mainmenu/ourwedding_helper.dart';
 import 'package:WalimatulUrsy/pages/static.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tilt/flutter_tilt.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:WalimatulUrsy/pages/modalbottom.dart';
+import 'package:WalimatulUrsy/pages/modalbottom/modalbottom.dart';
 
-class WeddingPageMobile extends StatefulWidget {
+class WeddingPagePC extends StatefulWidget {
   final double lebarLayar;
   final double tinggiLayar;
   final String guestName;
   final String guestCode;
   final String deviceType;
 
-  const WeddingPageMobile({
+  const WeddingPagePC({
     super.key,
     required this.lebarLayar,
     required this.tinggiLayar,
@@ -23,10 +23,10 @@ class WeddingPageMobile extends StatefulWidget {
   });
 
   @override
-  State<WeddingPageMobile> createState() => _WeddingPageMobileState();
+  State<WeddingPagePC> createState() => _WeddingPagePCState();
 }
 
-class _WeddingPageMobileState extends State<WeddingPageMobile>
+class _WeddingPagePCState extends State<WeddingPagePC>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   bool isPlaying = false;
@@ -122,22 +122,45 @@ class _WeddingPageMobileState extends State<WeddingPageMobile>
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: deviceType != ""
-                  ? Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Tilt(
-                          shadowConfig: const ShadowConfig(disable: true),
-                          childLayout: ChildLayout(
+                  ? Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Tilt(
+                            shadowConfig: const ShadowConfig(disable: true),
+                            childLayout: ChildLayout(
                               outer: [
-                                ...buildFlowerDecorationsOuter(
-                                    lebarLayar.toDouble())
+                                // Column(
+                                //   children: [
+                                //     // const Icon(
+                                //     //   Icons.favorite,
+                                //     //   color: Colors.brown,
+                                //     //   size: 14,
+                                //     // ),
+                                //     TeksBiasaBold(
+                                //         'Tampilan untuk perangkat Tablet/PC belum tersedia.',
+                                //         context),
+                                //     TeksBiasa(
+                                //         'Gunakan Handphone untuk membuka undangan.',
+                                //         context),
+                                //     const Icon(
+                                //       Icons.favorite,
+                                //       color: Colors.brown,
+                                //       size: 40,
+                                //     ),
+                                //   ],
+                                // ),
+
+                                // ...buildFlowerDecorationsOuterPC(
+                                //     lebarLayar.toDouble()),
                               ],
                               //Ornament Start
-                              behind: [
-                                ...buildDecorationElementsBehind(
-                                    lebarLayar.toDouble())
-                              ],
-                              //Ornament End
+                              // behind: [
+                              //   ...buildDecorationElementsBehind(
+                              //       lebarLayar.toDouble() / 5)
+                              // ],
+
+                              //Teks Utama
                               inner: [
                                 Center(
                                   child: Padding(
@@ -148,12 +171,7 @@ class _WeddingPageMobileState extends State<WeddingPageMobile>
                                         fadeTilt(
                                           Image.asset(
                                             'assets/weddingassets/bismillah.png',
-                                            scale: lebarLayar *
-                                                (lebarLayar < 350
-                                                    ? 0.03
-                                                    : lebarLayar < 414
-                                                        ? 0.02
-                                                        : 0.016),
+                                            scale: 7,
                                             fit: BoxFit.cover,
                                           ),
                                           animation: fadeInDown,
@@ -163,8 +181,7 @@ class _WeddingPageMobileState extends State<WeddingPageMobile>
 
                                         // Kalimat Pembuka
                                         ...[
-                                          'Dengan memohon rahmat dan ridho',
-                                          'Allah Azza Wa Jalla',
+                                          'Dengan memohon rahmat dan ridho Allah Azza Wa Jalla',
                                           'kami mengundang Bapak/Ibu/Saudara/i sekalian',
                                           'untuk menghadiri acara walimatul urs:',
                                         ].map((text) => fadeTilt(
@@ -221,25 +238,13 @@ class _WeddingPageMobileState extends State<WeddingPageMobile>
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Text(
-                                                'Info lebih lanjut ketuk tombol ',
-                                                style: GoogleFonts.poppins(
-                                                  fontStyle: FontStyle.italic,
-                                                  fontSize: lebarLayar * 0.03,
-                                                  color: Colors.brown[900],
-                                                ),
-                                              ),
+                                              TeksBiasa(
+                                                  'Info lebih lanjut ketuk tombol ',
+                                                  context),
                                               const Icon(Icons.favorite,
                                                   color: Colors.brown,
                                                   size: 14),
-                                              Text(
-                                                ' yaa..',
-                                                style: GoogleFonts.poppins(
-                                                  fontStyle: FontStyle.italic,
-                                                  fontSize: lebarLayar * 0.03,
-                                                  color: Colors.brown[900],
-                                                ),
-                                              ),
+                                              TeksBiasa(' ya..', context),
                                             ],
                                           ),
                                           animation: fadeInUp,
@@ -250,13 +255,15 @@ class _WeddingPageMobileState extends State<WeddingPageMobile>
                                     ),
                                   ),
                                 )
-                              ]),
-                          child: SizedBox(
-                            width: lebarLayar.toDouble(),
-                            height: tinggiLayar.toDouble(),
-                          ),
-                        ),
-                      ],
+                              ],
+                            ),
+                            child: SizedBox(
+                              width: 600,
+                              height: tinggiLayar,
+                            ),
+                          )
+                        ],
+                      ),
                     )
                   : Center(
                       child: Text(

@@ -1,8 +1,8 @@
 import 'dart:async';
 // import 'dart:math';
 // import 'package:WalimatulUrsy/pages/ourwedding_helper.dart';
-import 'package:WalimatulUrsy/pages/ourwedding_Mobile.dart';
-import 'package:WalimatulUrsy/pages/ourwedding_pc.dart';
+import 'package:WalimatulUrsy/pages/mainmenu/ourwedding_Mobile.dart';
+import 'package:WalimatulUrsy/pages/mainmenu/ourwedding_pc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_tilt/flutter_tilt.dart';
